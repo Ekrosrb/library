@@ -1,0 +1,28 @@
+<%@ include file="../taglib.jspf"%>
+<div class="dropdown">
+    <a class="nav-link active" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <fmt:message key="nav.login"/>
+    </a>
+
+    <div class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuLink" style="border-radius: 20px">
+        <div class=" dropdown-item d-flex justify-content-center bg-dark" style=" border-radius: 20px">
+            <form method="post" action="${pageContext.request.contextPath}/auth/login">
+                <c:if test="${not empty requestScope.message}">
+                    <div class="alert alert-danger" role="alert">
+                            ${requestScope.message}
+                    </div>
+                </c:if>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label text-light"><fmt:message key="form.email"/></label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email">
+                    <div id="emailHelp" class="form-text text-muted"><fmt:message key="form.passwordMessage"/></div>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label text-light" ><fmt:message key="form.password"/></label>
+                    <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+                </div>
+                <button type="submit" class="btn btn-primary"><fmt:message key="form.submitButton"/></button>
+            </form>
+        </div>
+    </div>
+</div>

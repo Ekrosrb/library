@@ -1,7 +1,7 @@
 package com.ekros.library.controller.filters;
 
-import com.ekros.library.dao.Role;
-import com.ekros.library.model.AuthUser;
+import com.ekros.library.model.entity.Role;
+import com.ekros.library.model.entity.AuthUser;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +16,7 @@ public class AdminFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         AuthUser authUser = (AuthUser) ((HttpServletRequest) servletRequest).getSession().getAttribute("auth");
-        if (authUser == null || authUser.getRole() == Role.ADMIN) {
+        if (authUser == null || authUser.getRole() != Role.ADMIN) {
             servletRequest.setAttribute("message", "You have not permission to this page!");
             servletRequest.getServletContext()
                     .getRequestDispatcher("/error")

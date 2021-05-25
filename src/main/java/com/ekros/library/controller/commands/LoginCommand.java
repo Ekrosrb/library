@@ -1,7 +1,7 @@
 package com.ekros.library.controller.commands;
 
-import com.ekros.library.model.User;
-import com.ekros.library.services.UserService;
+import com.ekros.library.model.entity.User;
+import com.ekros.library.model.service.UserService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.log4j.Logger;
 
@@ -12,8 +12,8 @@ public class LoginCommand implements ICommand{
 
     private final UserService userService;
     private final Logger log = Logger.getLogger(LoginCommand.class);
-    public LoginCommand(){
-        userService = UserService.getInstance();
+    public LoginCommand(UserService userService){
+        this.userService = userService;
     }
 
     @Override
@@ -24,7 +24,7 @@ public class LoginCommand implements ICommand{
         final String invalidPage = "/";
 
         String messageName = "message";
-        if(!CommandUtils.validate(email, password)){
+        if(CommandUtils.validate(email, password)){
             request.setAttribute(messageName, "Email or password is empty!");
             return invalidPage;
         }
@@ -34,6 +34,7 @@ public class LoginCommand implements ICommand{
                 request.setAttribute(messageName, "Incorrect email or password!");
                 return invalidPage;
             }
+
             if (!CommandUtils.updateSession(request, user)) {
                 request.setAttribute(messageName, "You are already authorized!");
                 return invalidPage;

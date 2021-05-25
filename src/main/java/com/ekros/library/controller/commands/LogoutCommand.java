@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 public class LogoutCommand implements ICommand{
 
@@ -13,8 +14,12 @@ public class LogoutCommand implements ICommand{
     public String execute(HttpServletRequest request) throws ServletException {
 
         log.info("Command: logout");
-        request.getSession().invalidate();
+
+        HttpSession session = request.getSession(false);
+        if(session != null){
+            session.invalidate();
+        }
         log.info("Session closed.");
-        return "/";
+        return "redirect:/";
     }
 }

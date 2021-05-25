@@ -1,0 +1,64 @@
+<%@ include file="../taglib.jspf"%>
+<div class="dropdown">
+    <a class="nav-link active" href="#" role="button" id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <fmt:message key="nav.signin"/>
+    </a>
+
+    <div class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuLink1" style="border-radius: 20px">
+        <div class=" dropdown-item d-flex justify-content-center bg-dark" style=" border-radius: 20px">
+            <form method="post" action="${pageContext.request.contextPath}/auth/sigin">
+                <c:if test="${not empty requestScope.message}">
+                    <div class="alert alert-danger" role="alert">
+                            ${requestScope.message}
+                    </div>
+                </c:if>
+                <div class="mb-3">
+                    <label for="firstName" class="form-label text-light"><fmt:message key="form.firstName"/></label>
+                    <input class="form-control" id="firstName" name = "firstName" aria-describedby="first name">
+                </div>
+                <div class="mb-3">
+                    <label for="lastName" class="form-label text-light"><fmt:message key="form.lastName"/></label>
+                    <input class="form-control" id="lastName" name = "lastName" aria-describedby="last name">
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label text-light"><fmt:message key="form.email"/></label>
+                    <input type="email" class="form-control" id="email" name = "email" aria-describedby="emailHelp">
+                    <div id="emailHelp1" class="form-text  text-muted"><fmt:message key="form.passwordMessage"/></div>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label text-light"><fmt:message key="form.password"/></label>
+                    <input type="password" class="form-control" id="password" name="password">
+                </div>
+                <div class="mb-3">
+                    <label for="confirm_password" class="form-label text-light"><fmt:message key="form.confirmPassword"/></label>
+                    <input type="password" class="form-control" id="confirm_password" name="confirm_password">
+                </div>
+                <script>
+                    let password = document.getElementById("password")
+                        , confirm_password = document.getElementById("confirm_password");
+
+                    function validatePassword(){
+                        if(password.value !== confirm_password.value) {
+                            confirm_password.setCustomValidity("Passwords Don't Match");
+                        } else {
+                            confirm_password.setCustomValidity('');
+                        }
+                    }
+                    password.onchange = validatePassword;
+                    confirm_password.onkeyup = validatePassword;
+                </script>
+
+                <div class="mb-3">
+                    <label for="birthday" class="form-label text-light"><fmt:message key="form.birthday"/></label>
+                    <input class="form-control" type="date" value="2000-01-01" id="birthday" name="birthday" aria-describedby="birthday">
+                </div>
+                <div class="mb-3">
+                    <label for="phone" class="form-label text-light"><fmt:message key="form.phone"/></label>
+                    <input class="form-control" id="phone" name = "phone" aria-describedby="phone number">
+                </div>
+                <button type="submit" class="btn btn-primary"><fmt:message key="form.submitButton"/></button>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,6 +1,7 @@
 package com.ekros.library.controller.filters;
 
-import com.ekros.library.model.AuthUser;
+import com.ekros.library.model.entity.AuthUser;
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
