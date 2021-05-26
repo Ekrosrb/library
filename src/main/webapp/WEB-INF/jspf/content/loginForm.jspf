@@ -6,12 +6,7 @@
 
     <div class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuLink" style="border-radius: 20px">
         <div class=" dropdown-item d-flex justify-content-center bg-dark" style=" border-radius: 20px">
-            <form method="post" action="${pageContext.request.contextPath}/auth/login">
-                <c:if test="${not empty requestScope.message}">
-                    <div class="alert alert-danger" role="alert">
-                            ${requestScope.message}
-                    </div>
-                </c:if>
+            <form method="post" action="${pageContext.request.contextPath}/library/login">
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label text-light"><fmt:message key="form.email"/></label>
                     <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email">

@@ -30,7 +30,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>LibraryServlet</servlet-name>
-        <url-pattern>/auth/*</url-pattern>  <!-- This is the URL of the servlet. -->
+        <url-pattern>/library/*</url-pattern>  <!-- This is the URL of the servlet. -->
     </servlet-mapping>
 
     <servlet>
@@ -41,7 +41,6 @@
         <servlet-name>ProfilePage</servlet-name>
         <url-pattern>/profile</url-pattern>
     </servlet-mapping>
-
 
     <servlet>
         <servlet-name>MainPage</servlet-name>
@@ -58,26 +57,27 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>AdminPage</servlet-name>
-        <url-pattern>/adminPage</url-pattern>
+        <url-pattern>/admin</url-pattern>
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>LibrarianPage</servlet-name>
-        <jsp-file>/librarian/librarianPage.jsp</jsp-file>
+        <servlet-name>AdminBooksPage</servlet-name>
+        <jsp-file>/admin/adminBooksPage.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
-        <servlet-name>LibrarianPage</servlet-name>
-        <url-pattern>/librarianPage</url-pattern>
+        <servlet-name>AdminBooksPage</servlet-name>
+        <url-pattern>/admin/books</url-pattern>
     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>UserPage</servlet-name>
-        <jsp-file>/user/userPage.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>UserPage</servlet-name>
-        <url-pattern>/userPage</url-pattern>
-    </servlet-mapping>
+
+<!--    <servlet>-->
+<!--        <servlet-name>LibrarianPage</servlet-name>-->
+<!--        <jsp-file>/librarian/librarianPage.jsp</jsp-file>-->
+<!--    </servlet>-->
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>LibrarianPage</servlet-name>-->
+<!--        <url-pattern>/librarianPage</url-pattern>-->
+<!--    </servlet-mapping>-->
 
     <filter>
         <filter-name>MainFilter</filter-name>
@@ -108,6 +108,8 @@
     <filter-mapping>
         <filter-name>AdminFilter</filter-name>
         <url-pattern>/admin/*</url-pattern>
+        <url-pattern>/library/admin</url-pattern>
+        <url-pattern>/library/adminBooks</url-pattern>
     </filter-mapping>
 
     <filter>

@@ -18,7 +18,7 @@
                 </li>
                     <c:if test="${not empty sessionScope.auth}">
                         <li class="nav-item">
-                            <form method="post" action="${pageContext.request.contextPath}/auth/logout">
+                            <form method="post" action="${pageContext.request.contextPath}/library/logout">
                                 <button class="nav-link active" role="button" aria-current="page" type="submit" style="background-color: transparent; border: none; cursor:pointer;"><fmt:message key="nav.logout"/></button>
                             </form>
                         </li>

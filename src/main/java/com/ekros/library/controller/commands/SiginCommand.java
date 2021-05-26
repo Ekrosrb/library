@@ -49,7 +49,7 @@ public class SiginCommand implements ICommand{
         }
 
         try {
-            User user = new User(firstName, lastName, email, DigestUtils.md5Hex(password), birthday, phone, Role.USER);
+            User user = new User(firstName, lastName, email, DigestUtils.md5Hex(password), birthday, phone, Role.USER, false);
             userService.addUser(user);
             if (!CommandUtils.updateSession(request, user)) {
                 request.setAttribute(messageName, "You are already authorized!");

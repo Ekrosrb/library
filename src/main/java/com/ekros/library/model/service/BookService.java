@@ -22,17 +22,20 @@ public class BookService {
         bookRepo.update(book);
     }
 
-    public void deleteBook(Book book) throws SQLException{
-        bookRepo.delete(book);
+    public void deleteBook(int id) throws SQLException{
+        bookRepo.delete(id);
     }
 
     public Book getBookById(int id) throws SQLException{
         return bookRepo.getBookById(id);
     }
 
-    public List<Book> getBooksByContainName(String name) throws SQLException{
-        name = "%" + name + "%";
-        return bookRepo.getBooksByContainsName(name);
+    public List<Book> getBooksByContainName(String name, int from) throws SQLException{
+        return bookRepo.getBooksByContainsName("%" + name + "%", from, from+20);
+    }
+
+    public int getCount(String name) throws SQLException {
+        return bookRepo.getBooksCount("%" + name + "%");
     }
 
 }

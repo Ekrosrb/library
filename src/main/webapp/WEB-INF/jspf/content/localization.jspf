@@ -3,7 +3,7 @@
     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <fmt:message key="nav.language"/>
     </button>>
-    <form action="${pageContext.request.contextPath}/auth/locale" method="post">
+    <form action="${pageContext.request.contextPath}/library/locale" method="post">
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <input type="submit" class="dropdown-item" name="locale" value="en">
             <input type="submit" class="dropdown-item" name="locale" value="ru">

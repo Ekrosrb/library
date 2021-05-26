@@ -11,11 +11,12 @@ public class User {
     private Date birthday;
     private String phone;
     private Role role;
+    private boolean block;
 
     public User() {
     }
 
-    public User(int id, String firstName, String lastName, String email, String password, Date birthday, String phone, Role role) {
+    public User(int id, String firstName, String lastName, String email, String password, Date birthday, String phone, Role role, boolean block) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -24,9 +25,10 @@ public class User {
         this.birthday = birthday;
         this.phone = phone;
         this.role = role;
+        this.block = block;
     }
 
-    public User(String firstName, String lastName, String email, String password, Date birthday, String phone, Role role) {
+    public User(String firstName, String lastName, String email, String password, Date birthday, String phone, Role role, boolean block) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -34,6 +36,7 @@ public class User {
         this.birthday = birthday;
         this.phone = phone;
         this.role = role;
+        this.block = block;
     }
 
     public int getId() {
@@ -98,5 +101,13 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public boolean isBlock() {
+        return block;
+    }
+
+    public void setBlock(boolean block) {
+        this.block = block;
     }
 }

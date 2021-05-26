@@ -34,6 +34,10 @@ public class LoginCommand implements ICommand{
                 request.setAttribute(messageName, "Incorrect email or password!");
                 return invalidPage;
             }
+            if(user.isBlock()){
+                request.setAttribute(messageName, "Your account has been blocked!");
+                return invalidPage;
+            }
 
             if (!CommandUtils.updateSession(request, user)) {
                 request.setAttribute(messageName, "You are already authorized!");

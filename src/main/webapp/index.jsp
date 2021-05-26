@@ -19,12 +19,12 @@
                 <c:choose>
                     <c:when test="${not empty sessionScope.auth}">
                         <li class="nav-item">
-                            <form method="post" action="${pageContext.request.contextPath}/auth/logout">
+                            <form method="post" action="${pageContext.request.contextPath}/library/logout">
                                 <button class="nav-link active" role="button" aria-current="page" type="submit" style="background-color: transparent; border: none; cursor:pointer;"><fmt:message key="nav.logout"/></button>
                             </form>
                         </li>
                         <li class="nav-item">
-                            <form method="post" action="${pageContext.request.contextPath}/auth/profile">
+                            <form method="post" action="${pageContext.request.contextPath}/library/profile">
                                 <button class="nav-link active" role="button" aria-current="page" type="submit" style="background-color: transparent; border: none; cursor:pointer;"><fmt:message key="nav.profile"/></button>
                             </form>
                         </li>
@@ -40,17 +40,18 @@
                 </c:choose>
 
             </ul>
-            <form class="form-inline mx-auto">
-                <input class="form-control mr-sm-2" type="search" placeholder="<fmt:message key="nav.search"/>" aria-label="Search">
+            <form class="form-inline mx-auto" method="post" action="${pageContext.request.contextPath}/library/books">
+                <input name="from" type="hidden" value="0">
+                <input class="form-control mr-sm-2" type="search" placeholder="<fmt:message key="nav.search"/>" aria-label="Search" name="bookName">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><fmt:message key="nav.search"/></button>
             </form>
             <div class="nav-item">
                 <c:if test="${sessionScope.auth.role == 'ADMIN'}">
-                    <form method="post" action="${pageContext.request.contextPath}/auth/admin">
+                    <form method="post" action="${pageContext.request.contextPath}/library/admin">
                         <button class="nav-link active text-light" role="button" aria-current="page" type="submit" style="background-color: transparent; border: none; cursor:pointer;"><fmt:message key="nav.admin"/></button>
                     </form></c:if>
                 <c:if test="${sessionScope.auth.role == 'LIBRARIAN'}">
-                    <form method="post" action="${pageContext.request.contextPath}/auth/librarian">
+                    <form method="post" action="${pageContext.request.contextPath}/library/librarian">
                         <button class="nav-link active text-light" role="button" aria-current="page" type="submit" style="background-color: transparent; border: none; cursor:pointer;"><fmt:message key="nav.lib"/></button>
                     </form>
                 </c:if>
@@ -61,11 +62,56 @@
 
     </div>
 </nav>
-
-<div class="card-columns">
-
+<c:if test="${not empty requestScope.message}">
+    <div class="alert alert-danger" role="alert">
+        ${requestScope.message}
+    </div>
+</c:if>
+<%--<%--%>
+<%--    if(request.getAttribute("books") == null){--%>
+<%--        response.sendRedirect("/library/books");--%>
+<%--    }--%>
+<%--%>--%>
+<div>
+    <p>${requestScope.count}</p>
 </div>
 
+<div class="card-columns" style="margin-left: 10%; margin-right: 10%">
+    <c:forEach items="${requestScope.books}" var="book">
+    <div class="card">
+        <img src="${book.img}" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">${book.name}</h5>
+            <p class="card-text">
+                <c:if test="${sessionScope.locale eq 'en'}">
+                    ${book.description}
+                </c:if>
+                <c:if test="${sessionScope.locale eq 'ru'}">
+                    ${book.descriptionRu}
+                </c:if>
+            </p>
+            <div class="card-footer text-muted">
+                ${book.edition}
+            </div>
+<%--            <a href="#" class="btn btn-primary">Go somewhere</a>--%>
+        </div>
+    </div>
+    </c:forEach>
+</div>
+
+<nav aria-label="Page navigation example">
+    <%  String count = request.getParameter("count");
+        Integer pages = 0;
+        if(count != null) {
+           pages = 1 + Integer.getInteger(count) / 20;
+        }%>
+    <ul class="pagination">
+        <c:forEach begin="1" end="<%=pages%>" varStatus="loop">
+            <li class="page-item"><a class="page-link" href="#">${loop.index}</a></li>
+        </c:forEach>
+
+    </ul>
+</nav>
 
 <%@ include file="WEB-INF/jspf/footer.jspf"%>
 </body>

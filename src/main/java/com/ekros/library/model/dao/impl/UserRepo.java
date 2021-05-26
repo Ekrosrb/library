@@ -6,14 +6,18 @@ import com.ekros.library.model.dao.mapper.UserMapper;
 import com.ekros.library.model.entity.User;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserRepo implements IUserRepo {
 
-    private static final String SQL_ADD_USER = "INSERT INTO users(first_name, last_name, email, password, birthday, phone, role) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    private static final String SQL_DELETE_USER = "DELETE FROM users WHERE email = ?";
-    private static final String SQL_UPDATE_USER = "UPDATE users SET first_name = ?, last_name = ?, password = ?, birthday = ?, phone = ?, role = ? WHERE email = ?";
+    private static final String SQL_ADD_USER = "INSERT INTO users(first_name, last_name, email, password, birthday, phone, role, block) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String SQL_DELETE_USER = "DELETE FROM users WHERE id = ?";
+    private static final String SQL_UPDATE_USER = "UPDATE users SET first_name = ?, last_name = ?, password = ?, birthday = ?, phone = ?, role = ?, block = ? WHERE email = ?";
     private static final String SQL_SELECT_USER_BY_EMAIL = "SELECT * FROM users WHERE email = ?";
     private static final String SQL_SELECT_USER_BY_ID = "SELECT * FROM users WHERE id = ?";
+    private static final String SQL_SELECT_USERS_PAGE = "SELECT * FROM users ORDER BY first_name LIMIT ?, ?";
+    private static final String SQL_USERS_COUNT = "SELECT COUNT(*) FROM users";
 
     private static UserRepo userRepo;
 
@@ -36,6 +40,7 @@ public class UserRepo implements IUserRepo {
             statement.setDate(5, user.getBirthday());
             statement.setString(6, user.getPhone());
             statement.setInt(7, user.getRole().ordinal());
+            statement.setBoolean(8, user.isBlock());
             statement.executeUpdate();
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
@@ -48,10 +53,10 @@ public class UserRepo implements IUserRepo {
     }
 
     @Override
-    public void delete(User user) throws SQLException{
+    public void delete(int id) throws SQLException{
         try(Connection conn = DBCPDataSource.getConnection();
             PreparedStatement statement = conn.prepareStatement(SQL_DELETE_USER)){
-            statement.setString(1, user.getEmail());
+            statement.setInt(1, id);
             statement.executeUpdate();
         }
     }
@@ -66,7 +71,9 @@ public class UserRepo implements IUserRepo {
             statement.setDate(4, user.getBirthday());
             statement.setString(5, user.getPhone());
             statement.setInt(6, user.getRole().ordinal());
-            statement.setString(7, user.getEmail());
+            statement.setBoolean(7, user.isBlock());
+            statement.setString(8, user.getEmail());
+
             statement.executeUpdate();
         }
     }
@@ -99,5 +106,34 @@ public class UserRepo implements IUserRepo {
             }
         }
         return user;
+    }
+
+    @Override
+    public List<User> getUsersPage(int from, int to) throws SQLException {
+        List<User> users = new ArrayList<>();
+        UserMapper mapper = new UserMapper();
+        try(Connection conn = DBCPDataSource.getConnection();
+            PreparedStatement statement = conn.prepareStatement(SQL_SELECT_USERS_PAGE)){
+            statement.setInt(1, from);
+            statement.setInt(2, to);
+            ResultSet rs = statement.executeQuery();
+            while(rs.next()){
+                users.add(mapper.getFromResultSet(rs));
+            }
+        }
+        return users;
+    }
+
+    @Override
+    public int getCount() throws SQLException {
+        try(Connection conn = DBCPDataSource.getConnection();
+            Statement statement = conn.createStatement()){
+            ResultSet res = statement.executeQuery(SQL_USERS_COUNT);
+            int count = 0;
+            if(res.next()){
+                 count = res.getInt(1);
+            }
+            return count;
+        }
     }
 }

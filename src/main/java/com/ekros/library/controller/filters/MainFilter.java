@@ -14,6 +14,11 @@ public class MainFilter implements Filter {
         servletResponse.setContentType("text/html");
         servletRequest.setCharacterEncoding("UTF-8");
         servletResponse.setCharacterEncoding("UTF-8");
+        String locale = (String) servletRequest.getAttribute("locale");
+
+        if(locale == null){
+            servletRequest.setAttribute("locale", "en");
+        }
         filterChain.doFilter(servletRequest, servletResponse);
     }
 

@@ -17,7 +17,8 @@ public class UserMapper implements Mapper<User>{
                 res.getString("password"),
                 res.getDate("birthday"),
                 res.getString("phone"),
-                Role.values()[res.getInt("role")]
+                Role.values()[res.getInt("role")],
+                res.getBoolean("block")
         );
     }
 }

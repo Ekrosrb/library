@@ -6,12 +6,7 @@
 
     <div class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuLink1" style="border-radius: 20px">
         <div class=" dropdown-item d-flex justify-content-center bg-dark" style=" border-radius: 20px">
-            <form method="post" action="${pageContext.request.contextPath}/auth/sigin">
-                <c:if test="${not empty requestScope.message}">
-                    <div class="alert alert-danger" role="alert">
-                            ${requestScope.message}
-                    </div>
-                </c:if>
+            <form method="post" action="${pageContext.request.contextPath}/library/sigin">
                 <div class="mb-3">
                     <label for="firstName" class="form-label text-light"><fmt:message key="form.firstName"/></label>
                     <input class="form-control" id="firstName" name = "firstName" aria-describedby="first name">

@@ -1,6 +1,7 @@
 package com.ekros.library.controller.servlets;
 
 import com.ekros.library.controller.commands.*;
+import com.ekros.library.model.service.BookService;
 import com.ekros.library.model.service.UserService;
 import org.apache.log4j.Logger;
 import javax.servlet.ServletException;
@@ -16,6 +17,7 @@ public class LibraryServlet extends HttpServlet {
     private Map<String, ICommand> commands;
     private Logger log;
     private final UserService userService = new UserService();
+    private final BookService bookService = new BookService();
     @Override
     public void init() throws ServletException {
         log = Logger.getLogger(LibraryServlet.class);
@@ -25,21 +27,29 @@ public class LibraryServlet extends HttpServlet {
         commands.put("sigin", new SiginCommand(userService));
         commands.put("locale", new LocaleCommand());
         commands.put("profile", new ProfileCommand(userService));
+        commands.put("books", new SearchBookCommand(bookService));
+        commands.put("admin", new AdminCommand(userService));
+        commands.put("updateUser", new UpdateUserCommand(userService));
+        commands.put("deleteUser", new DeleteUserCommand(userService));
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         log.info("--------GET--------");
+        handler(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        log.info("--------POST--------");
+        handler(req, resp);
+    }
 
+
+    private void handler(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
         try {
-            log.info("--------POST--------");
-
             String path = req.getRequestURI();
-            path = path.replaceAll(".*/auth/", "");
+            path = path.replaceAll(".*/library/", "");
 
             log.info("Command: " + path);
             ICommand command = commands.get(path);
@@ -58,7 +68,6 @@ public class LibraryServlet extends HttpServlet {
             resp.sendRedirect("/error");
         }
     }
-
 
     @Override
     public void destroy() {

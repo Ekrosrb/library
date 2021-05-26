@@ -4,11 +4,9 @@ import com.ekros.library.model.dao.config.DBCPDataSource;
 import com.ekros.library.model.dao.interfaces.IBookRepo;
 import com.ekros.library.model.dao.mapper.BookMapper;
 import com.ekros.library.model.entity.Book;
+import org.apache.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,9 +16,12 @@ public class BookRepo implements IBookRepo {
     private final String SQL_DELETE_BOOK = "DELETE FROM books WHERE id = ?";
     private final String SQL_UPDATE_BOOK = "UPDATE books SET name = ?, img = ?, author = ?, edition = ?, description = ?, description_ru = ?, count = ? WHERE id = ?";
     private final String SQL_SELECT_BOOK_BY_ID = "SELECT * FROM books WHERE id = ?";
-    private final String SQL_SELECT_BOOKS_BY_CONTAINS_NAME = "SELECT * FROM books WHERE name LIKE ?";
+    private final String SQL_SELECT_BOOKS_BY_CONTAINS_NAME = "SELECT * FROM books WHERE name LIKE ? LIMIT ?, ?";
+    private final String SQL_GET_BOOKS_COUNT = "SELECT COUNT(*) FROM books WHERE name LIKE ?";
 
     private static BookRepo bookRepo;
+
+    private final Logger log = Logger.getLogger(BookRepo.class);
 
     private BookRepo(){
 
@@ -51,10 +52,10 @@ public class BookRepo implements IBookRepo {
     }
 
     @Override
-    public void delete(Book book) throws SQLException {
+    public void delete(int id) throws SQLException {
         try(Connection conn = DBCPDataSource.getConnection();
             PreparedStatement statement = conn.prepareStatement(SQL_DELETE_BOOK)){
-            statement.setInt(1, book.getId());
+            statement.setInt(1, id);
             statement.executeUpdate();
         }
     }
@@ -85,18 +86,37 @@ public class BookRepo implements IBookRepo {
     }
 
     @Override
-    public List<Book> getBooksByContainsName(String name) throws SQLException{
+    public List<Book> getBooksByContainsName(String name, int from, int to) throws SQLException{
         BookMapper mapper = new BookMapper();
         List<Book> books = new ArrayList<>();
         try(Connection conn = DBCPDataSource.getConnection();
             PreparedStatement statement = conn.prepareStatement(SQL_SELECT_BOOKS_BY_CONTAINS_NAME)) {
+
             statement.setString(1, name);
+            statement.setInt(2, from);
+            statement.setInt(3, to);
             ResultSet res = statement.executeQuery();
+            log.info("get books from db:");
             while (res.next()){
+                log.info("book iteration");
                 books.add(mapper.getFromResultSet(res));
             }
         }
         return books;
+    }
+
+    @Override
+    public int getBooksCount(String name) throws SQLException{
+        try(Connection conn = DBCPDataSource.getConnection();
+            PreparedStatement statement = conn.prepareStatement(SQL_GET_BOOKS_COUNT)){
+            statement.setString(1, name);
+            ResultSet res = statement.executeQuery();
+            int count = 0;
+            if(res.next()) {
+                count = res.getInt(1);
+            }
+            return count;
+        }
     }
 
     private void prepareUpdate(PreparedStatement statement, Book book) throws SQLException{
