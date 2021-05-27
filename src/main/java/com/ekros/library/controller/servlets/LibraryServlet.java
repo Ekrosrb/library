@@ -31,6 +31,7 @@ public class LibraryServlet extends HttpServlet {
         commands.put("admin", new AdminCommand(userService));
         commands.put("updateUser", new UpdateUserCommand(userService));
         commands.put("deleteUser", new DeleteUserCommand(userService));
+        commands.put("adminAddUser", new AdminAddUserCommand(userService));
     }
 
     @Override

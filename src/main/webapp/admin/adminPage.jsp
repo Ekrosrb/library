@@ -39,13 +39,22 @@
 
     </div>
 </nav>
+<c:if test="${not empty requestScope.message}">
+    <div class="alert alert-danger" role="alert">
+            ${requestScope.message}
+    </div>
+</c:if>
 <div style="margin-left: 20%; margin-right: 20%; padding: 5%">
-    <button class="btn btn-primary" type="button"><fmt:message key="admin.pane.add"/></button>
+    <%@ include file="../WEB-INF/jspf/content/addUserModal.jspf"%>
     <ul class="list-group">
         <c:forEach items="${requestScope.userList}" var="users">
-            <li class="list-group-item">${users.firstName} ${users.lastName} | ${users.role}
+
+            <li class="list-group-item">
+                <span>${users.firstName} ${users.lastName} | ${users.role}</span>
                 <div class="d-flex justify-content-end">
-                <button type="button" class="btn btn-primary" style="margin: 3px"><fmt:message key="admin.pane.edit"/></button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#${users.id}" style="margin: 3px">
+                        <fmt:message key="admin.pane.edit"/>
+                    </button>
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" style="margin: 3px"><fmt:message key="admin.pane.delete"/></button>
                     <form method="post" action="${pageContext.request.contextPath}/library/updateUser">
                         <input name="id" type="hidden" value="${users.id}">
@@ -62,7 +71,6 @@
                             </c:choose>
                         </button>
                     </form>
-
                 </div>
             </li>
 
@@ -95,6 +103,9 @@
                     </div>
                 </div>
             </div>
+
+            <%@ include file="../WEB-INF/jspf/content/editUserModal.jspf"%>
+
         </c:forEach>
     </ul>
 </div>

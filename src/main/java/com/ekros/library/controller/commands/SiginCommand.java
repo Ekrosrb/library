@@ -20,38 +20,29 @@ public class SiginCommand implements ICommand{
     }
 
     @Override
-    public String execute(HttpServletRequest request){
+    public String execute(HttpServletRequest request) throws Exception{
         log.debug("Sigin command");
-        String firstName = request.getParameter("firstName");
-        String lastName = request.getParameter("lastName");
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        Date birthday = Date.valueOf(request.getParameter("birthday"));
-        String phone = request.getParameter("phone");
+
+        User reqUser = CommandUtils.getUserFromRequest(request);
 
         log.info("----NEW USER INFO----");
-        log.info(firstName);
-        log.info(lastName);
-        log.info(email);
-        log.info(birthday);
-        log.info(phone);
+        log.info(reqUser.getFirstName());
+        log.info(reqUser.getLastName());
+        log.info(reqUser.getEmail());
+        log.info(reqUser.getBirthday());
+        log.info(reqUser.getPhone());
         log.info("---------------------");
+
         final String invalidPage = "/";
 
         String messageName = "message";
-        if(CommandUtils.validate(email, password)){
-            request.setAttribute(messageName, "Email or password is empty!");
+        if(!CommandUtils.validateUser(reqUser, request)){
             return invalidPage;
         }
 
-        if(firstName == null || firstName.isEmpty() || lastName == null || lastName.isEmpty() || birthday == null || phone == null || phone.isEmpty()){
-            request.setAttribute(messageName, "Fill in all the fields!");
-        }
-
         try {
-            User user = new User(firstName, lastName, email, DigestUtils.md5Hex(password), birthday, phone, Role.USER, false);
-            userService.addUser(user);
-            if (!CommandUtils.updateSession(request, user)) {
+            userService.addUser(reqUser);
+            if (!CommandUtils.updateSession(request, reqUser)) {
                 request.setAttribute(messageName, "You are already authorized!");
                 return invalidPage;
             }

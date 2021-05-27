@@ -1,36 +1,41 @@
 package com.ekros.library.controller.commands;
 
 import com.ekros.library.model.service.BookService;
+import org.apache.log4j.Logger;
+
 import javax.servlet.http.HttpServletRequest;
 
 public class SearchBookCommand implements ICommand{
 
     private final BookService bookService;
-
+    private Logger log = Logger.getLogger(SearchBookCommand.class);
     public SearchBookCommand(BookService bookService) {
         this.bookService = bookService;
     }
 
     @Override
     public String execute(HttpServletRequest request) throws Exception {
-        String name = (String) request.getAttribute("bookName");
-        Integer from = (Integer) request.getAttribute("from");
+        String name = request.getParameter("bookName");
+        String from = request.getParameter("from");
 
-        if(name == null){
+        log.info("Search: " + name);
+
+        if(name == null || name.isEmpty()){
             name = "";
-            request.setAttribute("books", bookService.getBooksByContainName(name, 0));
         }else if(name.length() < 5){
-            request.setAttribute("searchMessage", "The title is too short!");
-        }else if(from == null){
-            request.setAttribute("message", "Field 'form' not found!");
-            return "/error";
-        }else{
-            request.setAttribute("books", bookService.getBooksByContainName(name, from));
+            request.setAttribute("message", "The title is too short!");
+            return "/";
         }
+        if(from == null){
+            from = "0";
+        }
+
+        request.setAttribute("books", bookService.getBooksByContainName(name, Integer.parseInt(from)));
 
         int count = bookService.getCount(name);
         request.setAttribute("count", count);
         request.setAttribute("pages", 1 + count/20);
+        request.setAttribute("bookName", name);
         return "/";
     }
 }

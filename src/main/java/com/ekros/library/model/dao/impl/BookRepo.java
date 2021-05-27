@@ -96,9 +96,7 @@ public class BookRepo implements IBookRepo {
             statement.setInt(2, from);
             statement.setInt(3, to);
             ResultSet res = statement.executeQuery();
-            log.info("get books from db:");
             while (res.next()){
-                log.info("book iteration");
                 books.add(mapper.getFromResultSet(res));
             }
         }

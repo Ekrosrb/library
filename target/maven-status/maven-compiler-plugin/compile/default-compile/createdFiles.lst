@@ -14,6 +14,7 @@ com\ekros\library\model\entity\AuthUser.class
 com\ekros\library\controller\commands\AdminCommand.class
 com\ekros\library\controller\commands\LocaleCommand.class
 com\ekros\library\controller\commands\UpdateUserCommand.class
+com\ekros\library\controller\commands\AdminAddUserCommand.class
 com\ekros\library\controller\commands\ICommand.class
 com\ekros\library\controller\commands\CommandUtils.class
 com\ekros\library\model\dao\mapper\BookMapper.class

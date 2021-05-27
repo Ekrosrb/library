@@ -1,0 +1,80 @@
+<%@ include file="/WEB-INF/jspf/taglib.jspf" %>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addUserModal" style="margin: 3px">
+    <fmt:message key="admin.pane.add"/>
+</button>
+<!-- Modal -->
+<div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addUserModalLabel"><fmt:message key="modal.add.user.title"/></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" action="${pageContext.request.contextPath}/library/adminAddUser">
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="firstName" class="form-label text-dark"><fmt:message key="form.firstName"/></label>
+                    <input class="form-control" id="firstName" name = "firstName" aria-describedby="first name">
+                </div>
+                <div class="mb-3">
+                    <label for="lastName" class="form-label text-dark"><fmt:message key="form.lastName"/></label>
+                    <input class="form-control" id="lastName" name = "lastName" aria-describedby="last name">
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label text-dark"><fmt:message key="form.email"/></label>
+                    <input type="email" class="form-control" id="email" name = "email" aria-describedby="emailHelp">
+                    <div id="emailHelp1" class="form-text  text-muted"><fmt:message key="form.passwordMessage"/></div>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label text-dark"><fmt:message key="form.password"/></label>
+                    <input type="password" class="form-control" id="password" name="password">
+                </div>
+                <div class="mb-3">
+                    <label for="confirm_password" class="form-label text-dark"><fmt:message key="form.confirmPassword"/></label>
+                    <input type="password" class="form-control" id="confirm_password" name="confirm_password">
+                </div>
+
+                <script>
+                    let password = document.getElementById("password")
+                        , confirm_password = document.getElementById("confirm_password");
+
+                    function validatePassword(){
+                        if(password.value !== confirm_password.value) {
+                            confirm_password.setCustomValidity("Passwords Don't Match");
+                        } else {
+                            confirm_password.setCustomValidity('');
+                        }
+                    }
+                    password.onchange = validatePassword;
+                    confirm_password.onkeyup = validatePassword;
+                </script>
+                <div class="mb-3">
+                    <label for="birthday" class="form-label text-dark"><fmt:message key="form.birthday"/></label>
+                    <input class="form-control" type="date" value="2000-01-01" id="birthday" name="birthday" aria-describedby="birthday">
+                </div>
+                <div class="mb-3">
+                    <label for="phone" class="form-label text-dark"><fmt:message key="form.phone"/></label>
+                    <input class="form-control" id="phone" name = "phone" aria-describedby="phone number">
+                </div>
+                <div class="form-group">
+                    <label for="role"><fmt:message key="form.admin.role"/></label>
+                    <select class="form-control" id="role" name="role">
+                        <option><fmt:message key="form.role.name.admin"/></option>
+                        <option><fmt:message key="form.role.name.librarian"/></option>
+                        <option><fmt:message key="form.role.name.user"/></option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="modal.add.user.discard"/></button>
+                <button type="submit" class="btn btn-primary"><fmt:message key="modal.add.user.confirm"/></button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -24,7 +24,7 @@ public class LoginCommand implements ICommand{
         final String invalidPage = "/";
 
         String messageName = "message";
-        if(CommandUtils.validate(email, password)){
+        if(!CommandUtils.validate(email, password)){
             request.setAttribute(messageName, "Email or password is empty!");
             return invalidPage;
         }

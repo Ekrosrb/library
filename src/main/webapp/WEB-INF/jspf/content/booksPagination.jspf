@@ -1,0 +1,14 @@
+<%@ include file="/WEB-INF/jspf/taglib.jspf" %>
+<div class="d-flex justify-content-center">
+<ul class="pagination">
+    <c:forEach begin="1" end="${requestScope.pages}" varStatus="loop">
+        <li class="page-item">
+            <form method="post" action="${pageContext.request.contextPath}/library/books">
+                <input type="hidden" name="from" value="${(loop.index-1)*20}"/>
+                <input type="hidden" name="bookName" value="${requestScope.bookName}"/>
+                <button class="page-link text-light bg-dark" type="submit">${loop.index}</button>
+            </form>
+        </li>
+    </c:forEach>
+</ul>
+</div>

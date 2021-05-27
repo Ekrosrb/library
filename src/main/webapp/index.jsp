@@ -57,9 +57,7 @@
                 </c:if>
             </div>
         </div>
-
         <%@ include file="WEB-INF/jspf/content/localization.jspf"%>
-
     </div>
 </nav>
 <c:if test="${not empty requestScope.message}">
@@ -67,23 +65,20 @@
         ${requestScope.message}
     </div>
 </c:if>
-<%--<%--%>
-<%--    if(request.getAttribute("books") == null){--%>
-<%--        response.sendRedirect("/library/books");--%>
-<%--    }--%>
-<%--%>--%>
 <div>
     <p>${requestScope.count}</p>
 </div>
 
+<%@ include file="/WEB-INF/jspf/content/booksPagination.jspf" %>
+
 <div class="card-columns" style="margin-left: 10%; margin-right: 10%">
     <c:forEach items="${requestScope.books}" var="book">
-    <div class="card">
+    <div class="card border-dark mb-3">
         <img src="${book.img}" class="card-img-top" alt="...">
         <div class="card-body">
             <h5 class="card-title">${book.name}</h5>
             <p class="card-text">
-                <c:if test="${sessionScope.locale eq 'en'}">
+                <c:if test="${empty sessionScope.locale || sessionScope.locale eq 'en'}">
                     ${book.description}
                 </c:if>
                 <c:if test="${sessionScope.locale eq 'ru'}">
@@ -93,25 +88,14 @@
             <div class="card-footer text-muted">
                 ${book.edition}
             </div>
-<%--            <a href="#" class="btn btn-primary">Go somewhere</a>--%>
+
+            <button></button>
         </div>
     </div>
     </c:forEach>
 </div>
 
-<nav aria-label="Page navigation example">
-    <%  String count = request.getParameter("count");
-        Integer pages = 0;
-        if(count != null) {
-           pages = 1 + Integer.getInteger(count) / 20;
-        }%>
-    <ul class="pagination">
-        <c:forEach begin="1" end="<%=pages%>" varStatus="loop">
-            <li class="page-item"><a class="page-link" href="#">${loop.index}</a></li>
-        </c:forEach>
-
-    </ul>
-</nav>
+<%@ include file="/WEB-INF/jspf/content/booksPagination.jspf" %>
 
 <%@ include file="WEB-INF/jspf/footer.jspf"%>
 </body>
