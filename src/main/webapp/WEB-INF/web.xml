@@ -34,6 +34,15 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>LibraryPage</servlet-name>
+        <jsp-file>/librarian/librarianPage.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LibraryPage</servlet-name>
+        <url-pattern>/librarian</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>ProfilePage</servlet-name>
         <jsp-file>/profilePage.jsp</jsp-file>
     </servlet>
@@ -59,17 +68,6 @@
         <servlet-name>AdminPage</servlet-name>
         <url-pattern>/admin</url-pattern>
     </servlet-mapping>
-
-    <servlet>
-        <servlet-name>AdminBooksPage</servlet-name>
-        <jsp-file>/admin/adminBooksPage.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>AdminBooksPage</servlet-name>
-        <url-pattern>/admin/books</url-pattern>
-    </servlet-mapping>
-
-
 <!--    <servlet>-->
 <!--        <servlet-name>LibrarianPage</servlet-name>-->
 <!--        <jsp-file>/librarian/librarianPage.jsp</jsp-file>-->
@@ -96,8 +94,8 @@
 
     <filter-mapping>
         <filter-name>AuthFilter</filter-name>
-        <url-pattern>/auth/login</url-pattern>
-        <url-pattern>/auth/sigin</url-pattern>
+        <url-pattern>/library/login</url-pattern>
+        <url-pattern>/library/sigin</url-pattern>
     </filter-mapping>
 
     <filter>
@@ -108,8 +106,12 @@
     <filter-mapping>
         <filter-name>AdminFilter</filter-name>
         <url-pattern>/admin/*</url-pattern>
+        <url-pattern>/librarian/*</url-pattern>
         <url-pattern>/library/admin</url-pattern>
-        <url-pattern>/library/adminBooks</url-pattern>
+        <url-pattern>/library/deleteUser</url-pattern>
+        <url-pattern>/library/adminAddUser</url-pattern>
+        <url-pattern>/library/adminUpdateBook</url-pattern>
+        <url-pattern>/library/deleteBook</url-pattern>
     </filter-mapping>
 
     <filter>
@@ -119,7 +121,9 @@
 
     <filter-mapping>
         <filter-name>LibrarianFilter</filter-name>
-        <url-pattern>/librarian/*</url-pattern>
+        <url-pattern>/library/librarian</url-pattern>
+        <url-pattern>/library/acceptSub</url-pattern>
+        <url-pattern>/library/rejectSub</url-pattern>
     </filter-mapping>
 
     <filter>
@@ -129,7 +133,10 @@
 
     <filter-mapping>
         <filter-name>UserFilter</filter-name>
-        <url-pattern>/user/*</url-pattern>
+        <url-pattern>/library/logout</url-pattern>
+        <url-pattern>/library/profile</url-pattern>
+        <url-pattern>/library/updateUser</url-pattern>
+        <url-pattern>/library/orderBook</url-pattern>
     </filter-mapping>
 
     <listener>

@@ -10,7 +10,6 @@ public class BookMapper implements Mapper<Book> {
     public Book getFromResultSet(ResultSet res) throws SQLException {
         return new Book(
                 res.getInt("id"),
-                res.getBlob("img"),
                 res.getString("name"),
                 res.getString("author"),
                 res.getString("edition"),

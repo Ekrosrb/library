@@ -25,31 +25,84 @@
                     </c:if>
             </ul>
         </div>
+        <div class="nav-item">
+            <%@ include file="WEB-INF/jspf/content/navRoleButtons.jspf"%>
+        </div>
         <%@ include file="WEB-INF/jspf/content/localization.jspf"%>
     </div>
+
 </nav>
 <div style="margin-left: 20%; margin-right: 20%; padding: 5%">
-    <div class="mb-3">
+    <div class="mb-3 ">
         <label for="firstName" class="form-label text-dark"><fmt:message key="form.firstName"/></label>
-        <input class="form-control" id="firstName" name = "firstName" aria-describedby="first name" value="${sessionScope.firstName}" disabled>
+        <input class="form-control border border-dark rounded" id="firstName" name = "firstName" aria-describedby="first name" value="${sessionScope.firstName}" disabled>
     </div>
     <div class="mb-3">
         <label for="lastName" class="form-label text-dark"><fmt:message key="form.lastName"/></label>
-        <input class="form-control" id="lastName" name = "lastName" aria-describedby="last name" value="${sessionScope.lastName}" disabled>
+        <input class="form-control border border-dark rounded" id="lastName" name = "lastName" aria-describedby="last name" value="${sessionScope.lastName}" disabled>
     </div>
 
     <div class="mb-3">
         <label for="email" class="form-label text-dark"><fmt:message key="form.email"/></label>
-        <input type="email" class="form-control" id="email" name = "email" aria-describedby="emailHelp" value="${sessionScope.email}" disabled>
+        <input type="email" class="form-control border border-dark rounded" id="email" name = "email" aria-describedby="emailHelp" value="${sessionScope.email}" disabled>
     </div>
 
     <div class="mb-3">
         <label for="birthday" class="form-label text-dark"><fmt:message key="form.birthday"/></label>
-        <input class="form-control" type="date" id="birthday" name="birthday" aria-describedby="birthday" value="${sessionScope.birthday}" disabled>
+        <input class="form-control border border-dark rounded" type="date" id="birthday" name="birthday" aria-describedby="birthday" value="${sessionScope.birthday}" disabled>
     </div>
     <div class="mb-3">
         <label for="phone" class="form-label text-dark"><fmt:message key="form.phone"/></label>
-        <input class="form-control" id="phone" name = "phone" aria-describedby="phone number" value="${sessionScope.phone}" disabled>
+        <input class="form-control border border-dark rounded" id="phone" name = "phone" aria-describedby="phone number" value="${sessionScope.phone}" disabled>
+    </div>
+    <div>
+        <h3><fmt:message key="library.orders.list.title"/></h3>
+        <ul class="list-group border border-dark rounded">
+            <c:choose>
+                <c:when test="${requestScope.subList.size() > 0}">
+                    <c:forEach items="${requestScope.subList}" var="sub">
+                        <li class="list-group-item">
+                            <p><fmt:message key="profile.order.info.id"/> : ${sub.id}</p>
+                            <c:choose>
+                                <c:when test="${sub.status == 'ACCEPTED'}">
+                                    <p class="alert alert-success" role="alert">
+                                        <fmt:message key="profile.order.info.status.accept"/>
+                                    </p>
+                                </c:when>
+                                <c:when test="${sub.status == 'PENDING'}">
+                                    <p class="alert alert-info" role="alert">
+                                        <fmt:message key="profile.order.info.status.wait"/>
+                                    </p>
+                                </c:when>
+                                <c:when test="${sub.status == 'REJECTED'}">
+                                    <p class="alert alert-dark" role="alert">
+                                        <fmt:message key="profile.order.info.status.reject"/>
+                                    </p>
+                                </c:when>
+                                <c:when test="${sub.status == 'ON_USE'}">
+                                    <p class="alert alert-success" role="alert">
+                                        <fmt:message key="profile.order.info.status.on.use"/>
+                                    </p>
+                                </c:when>
+                                <c:when test="${sub.status == 'EXPIRED'}">
+                                    <p class="alert alert-danger" role="alert">
+                                        <fmt:message key="profile.order.info.status.expired"/>
+                                    </p>
+                                </c:when>
+                                <c:when test="${sub.status == 'CLOSED'}">
+                                    <p class="alert alert-light" role="alert">
+                                        <fmt:message key="profile.order.info.status.expired"/>
+                                    </p>
+                                </c:when>
+                            </c:choose>
+                        </li>
+                    </c:forEach>
+                </c:when>
+                <c:otherwise>
+                    <p><fmt:message key="library.orders.list.message"/></p>
+                </c:otherwise>
+            </c:choose>
+        </ul>
     </div>
 </div>
 <%@ include file="WEB-INF/jspf/footer.jspf"%>

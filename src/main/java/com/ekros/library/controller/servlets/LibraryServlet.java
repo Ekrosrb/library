@@ -1,7 +1,20 @@
 package com.ekros.library.controller.servlets;
 
 import com.ekros.library.controller.commands.*;
+import com.ekros.library.controller.commands.admin.*;
+import com.ekros.library.controller.commands.user.UpdateUserCommand;
+import com.ekros.library.controller.commands.guest.LocaleCommand;
+import com.ekros.library.controller.commands.guest.LoginCommand;
+import com.ekros.library.controller.commands.guest.SearchBookCommand;
+import com.ekros.library.controller.commands.guest.SiginCommand;
+import com.ekros.library.controller.commands.librarian.AcceptSubCommand;
+import com.ekros.library.controller.commands.librarian.LibrarianCommand;
+import com.ekros.library.controller.commands.librarian.RejectSubCommand;
+import com.ekros.library.controller.commands.user.AddOrderCommand;
+import com.ekros.library.controller.commands.user.LogoutCommand;
+import com.ekros.library.controller.commands.user.ProfileCommand;
 import com.ekros.library.model.service.BookService;
+import com.ekros.library.model.service.OrderService;
 import com.ekros.library.model.service.UserService;
 import org.apache.log4j.Logger;
 import javax.servlet.ServletException;
@@ -18,6 +31,8 @@ public class LibraryServlet extends HttpServlet {
     private Logger log;
     private final UserService userService = new UserService();
     private final BookService bookService = new BookService();
+    private final OrderService orderService = new OrderService();
+
     @Override
     public void init() throws ServletException {
         log = Logger.getLogger(LibraryServlet.class);
@@ -26,12 +41,18 @@ public class LibraryServlet extends HttpServlet {
         commands.put("logout", new LogoutCommand());
         commands.put("sigin", new SiginCommand(userService));
         commands.put("locale", new LocaleCommand());
-        commands.put("profile", new ProfileCommand(userService));
+        commands.put("profile", new ProfileCommand(userService, orderService));
         commands.put("books", new SearchBookCommand(bookService));
         commands.put("admin", new AdminCommand(userService));
         commands.put("updateUser", new UpdateUserCommand(userService));
         commands.put("deleteUser", new DeleteUserCommand(userService));
         commands.put("adminAddUser", new AdminAddUserCommand(userService));
+        commands.put("adminUpdateBook", new UpdateBookCommand(bookService));
+        commands.put("deleteBook", new DeleteBookCommand(bookService));
+        commands.put("orderBook", new AddOrderCommand(orderService));
+        commands.put("librarian", new LibrarianCommand(orderService));
+        commands.put("acceptSub", new AcceptSubCommand(orderService));
+        commands.put("rejectSub", new RejectSubCommand(orderService));
     }
 
     @Override
@@ -56,17 +77,17 @@ public class LibraryServlet extends HttpServlet {
             ICommand command = commands.get(path);
 
             path = command.execute(req);
-            if(path.contains("redirect:")) {
-                path = path.replaceAll("redirect:", "");
+            if(path.contains(Path.REDIRECT)) {
+                path = path.replaceAll(Path.REDIRECT, "");
                 log.info("Send redirect: " + path);
                 resp.sendRedirect(path);
             }else{
                 log.info("Forward: " + path);
-                req.getServletContext().getRequestDispatcher(path).forward(req, resp);
+                CommandUtils.forward(req, resp, path);
             }
         }catch (Exception e){
             log.error(e.getMessage());
-            resp.sendRedirect("/error");
+            resp.sendRedirect(Path.ERROR_PAGE);
         }
     }
 

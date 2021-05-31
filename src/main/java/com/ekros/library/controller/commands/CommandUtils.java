@@ -1,13 +1,16 @@
 package com.ekros.library.controller.commands;
 
-import com.ekros.library.model.entity.AuthUser;
-import com.ekros.library.model.entity.Role;
-import com.ekros.library.model.entity.User;
+import com.ekros.library.model.entity.*;
+import org.apache.commons.codec.digest.DigestUtils;
 
 
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.jstl.core.Config;
+import java.io.IOException;
 import java.sql.Date;
 
 public class CommandUtils {
@@ -36,14 +39,14 @@ public class CommandUtils {
 
     public static boolean validateUser(User reqUser, HttpServletRequest request){
         if(!CommandUtils.validate(reqUser.getEmail(), reqUser.getPassword())){
-            request.setAttribute("message", "Email or password is empty!");
+            CommandUtils.setMessage(request, "Email or password is empty!");
             return false;
         }
 
         if(reqUser.getFirstName() == null || reqUser.getFirstName().isEmpty() ||
                 reqUser.getLastName() == null || reqUser.getLastName().isEmpty() ||
                 reqUser.getBirthday() == null || reqUser.getPhone() == null || reqUser.getPhone().isEmpty()){
-            request.setAttribute("message", "Fill in all the fields!");
+            CommandUtils.setMessage(request, "Fill in all the fields!");
             return false;
         }
         return true;
@@ -59,9 +62,32 @@ public class CommandUtils {
         String role = request.getParameter("role");
 
         return new User(firstName, lastName,
-                email, password,
+                email, DigestUtils.md5Hex(password),
                 birthday, phone,
                 role != null?Role.valueOf(role):Role.USER,
                 false);
     }
+
+    public static String searchBookRequest(HttpServletRequest request){
+        request.setAttribute("bookName", request.getParameter("bookName"));
+        request.setAttribute("from", request.getParameter("from"));
+        return Path.MAIN_PAGE;
+    }
+
+    public static void setMessage(ServletRequest request, String message){
+        request.setAttribute("message", message);
+    }
+
+    public static void forward(ServletRequest request, ServletResponse response, String path) throws ServletException, IOException {
+        request.getServletContext().getRequestDispatcher(path).forward(request, response);
+    }
+
+    public static boolean validateOrder(Order order, Status status){
+        return order != null && order.getStatus() == status;
+    }
+
+    public static boolean validateId(String id){
+        return id != null && !id.isEmpty();
+    }
+
 }

@@ -1,10 +1,7 @@
 package com.ekros.library.model.entity;
 
-import java.sql.Blob;
-
 public class Book {
     private int id;
-    private Blob img;
     private String name;
     private String author;
     private String edition;
@@ -15,9 +12,8 @@ public class Book {
     public Book() {
     }
 
-    public Book(int id, Blob img, String name, String author, String edition, String description, String descriptionRu, int count) {
+    public Book(int id, String name, String author, String edition, String description, String descriptionRu, int count) {
         this.id = id;
-        this.img = img;
         this.name = name;
         this.author = author;
         this.edition = edition;
@@ -32,14 +28,6 @@ public class Book {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public Blob getImg() {
-        return img;
-    }
-
-    public void setImg(Blob img) {
-        this.img = img;
     }
 
     public String getName() {

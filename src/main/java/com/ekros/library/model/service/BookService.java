@@ -1,5 +1,6 @@
 package com.ekros.library.model.service;
 
+import com.ekros.library.model.dao.config.DBCPDataSource;
 import com.ekros.library.model.dao.impl.BookRepo;
 import com.ekros.library.model.dao.interfaces.IBookRepo;
 import com.ekros.library.model.entity.Book;
@@ -9,6 +10,7 @@ import java.util.List;
 
 public class BookService {
     private final IBookRepo bookRepo;
+    private final int page = Integer.parseInt(DBCPDataSource.prop.getProperty("page.size"));
 
     public BookService(){
         bookRepo = BookRepo.getInstance();
@@ -31,7 +33,7 @@ public class BookService {
     }
 
     public List<Book> getBooksByContainName(String name, int from) throws SQLException{
-        return bookRepo.getBooksByContainsName("%" + name + "%", from, from+20);
+        return bookRepo.getBooksByContainsName("%" + name + "%", from, from+page);
     }
 
     public int getCount(String name) throws SQLException {

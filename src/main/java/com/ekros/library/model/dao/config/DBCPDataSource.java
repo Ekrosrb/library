@@ -12,14 +12,14 @@ import java.util.Properties;
 
 public class DBCPDataSource {
 
+    public static final Properties prop = new Properties();
     private static final BasicDataSource ds = new BasicDataSource();
     private static final Logger log = LogManager.getLogger(DBCPDataSource.class);
     static {
         try (InputStream input = Thread.currentThread()
                 .getContextClassLoader()
-                .getResourceAsStream("properties/db.properties")) {
+                .getResourceAsStream("properties/application.properties")) {
 
-        Properties prop = new Properties();
         prop.load(input);
 
         ds.setUrl(prop.getProperty("connection.url"));

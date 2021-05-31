@@ -11,6 +11,8 @@ import java.util.List;
 
 public class UserRepo implements IUserRepo {
 
+    private UserRepo() {}
+
     private static final String SQL_ADD_USER = "INSERT INTO users(first_name, last_name, email, password, birthday, phone, role, block) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String SQL_DELETE_USER = "DELETE FROM users WHERE id = ?";
     private static final String SQL_UPDATE_USER = "UPDATE users SET first_name = ?, last_name = ?, password = ?, birthday = ?, phone = ?, role = ?, block = ? WHERE email = ?";

@@ -26,13 +26,10 @@
                         <button class="nav-link active" role="button" aria-current="page" type="submit" style="background-color: transparent; border: none; cursor:pointer;"><fmt:message key="nav.profile"/></button>
                     </form>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/library/adminUsers"><fmt:message key="nav.admin.books"/></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/library/admin"><fmt:message key="nav.admin.users"/></a>
-                </li>
             </ul>
+        </div>
+        <div class="nav-item">
+            <%@ include file="/WEB-INF/jspf/content/navRoleButtons.jspf"%>
         </div>
 
         <%@ include file="../WEB-INF/jspf/content/localization.jspf"%>
@@ -55,7 +52,7 @@
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#${users.id}" style="margin: 3px">
                         <fmt:message key="admin.pane.edit"/>
                     </button>
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" style="margin: 3px"><fmt:message key="admin.pane.delete"/></button>
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#${users.id}deleteModal" style="margin: 3px"><fmt:message key="admin.pane.delete"/></button>
                     <form method="post" action="${pageContext.request.contextPath}/library/updateUser">
                         <input name="id" type="hidden" value="${users.id}">
                         <input name="block" type="hidden" value="${not users.block}">
@@ -74,11 +71,11 @@
                 </div>
             </li>
 
-            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal fade" id="${users.id}deleteModal" tabindex="-1" aria-labelledby="${users.id}deleteModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="deleteModalLabel">
+                            <h5 class="modal-title" id="${users.id}deleteModalLabel">
                                 <fmt:message key="message.alert.delete.title"/> ${users.email}
                             </h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -89,7 +86,7 @@
                             <fmt:message key="message.alert.delete"/>
                         </div>
                         <form method="post" action="${pageContext.request.contextPath}/library/deleteUser">
-                            <input type="hidden" name="id" value="${users.id}"/>
+                            <input type="text" name="id" value="${users.id}"/>
                             <input type="hidden" name="href" value="/library/admin">
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">

@@ -12,9 +12,11 @@ import java.util.List;
 
 public class BookRepo implements IBookRepo {
 
-    private final String SQL_INSERT_BOOK = "INSERT INTO books(name, img, author, edition, description, description_ru, count) VALUES (?,?,?,?,?,?,?)";
+    private BookRepo(){}
+
+    private final String SQL_INSERT_BOOK = "INSERT INTO books(name, author, edition, description, description_ru, count) VALUES (?,?,?,?,?,?)";
     private final String SQL_DELETE_BOOK = "DELETE FROM books WHERE id = ?";
-    private final String SQL_UPDATE_BOOK = "UPDATE books SET name = ?, img = ?, author = ?, edition = ?, description = ?, description_ru = ?, count = ? WHERE id = ?";
+    private final String SQL_UPDATE_BOOK = "UPDATE books SET name = ?, author = ?, edition = ?, description = ?, description_ru = ?, count = ? WHERE id = ?";
     private final String SQL_SELECT_BOOK_BY_ID = "SELECT * FROM books WHERE id = ?";
     private final String SQL_SELECT_BOOKS_BY_CONTAINS_NAME = "SELECT * FROM books WHERE name LIKE ? LIMIT ?, ?";
     private final String SQL_GET_BOOKS_COUNT = "SELECT COUNT(*) FROM books WHERE name LIKE ?";
@@ -23,17 +25,12 @@ public class BookRepo implements IBookRepo {
 
     private final Logger log = Logger.getLogger(BookRepo.class);
 
-    private BookRepo(){
-
-    }
-
     public static BookRepo getInstance(){
         if(bookRepo == null){
             bookRepo = new BookRepo();
         }
         return bookRepo;
     }
-
 
     @Override
     public void insert(Book book) throws SQLException {
@@ -119,10 +116,10 @@ public class BookRepo implements IBookRepo {
 
     private void prepareUpdate(PreparedStatement statement, Book book) throws SQLException{
         statement.setString(1, book.getName());
-        statement.setBlob(2, book.getImg());
-        statement.setString(3, book.getAuthor());
-        statement.setString(4, book.getEdition());
-        statement.setString(5, book.getDescription());
-        statement.setString(6, book.getDescriptionRu());
+        statement.setString(2, book.getAuthor());
+        statement.setString(3, book.getEdition());
+        statement.setString(4, book.getDescription());
+        statement.setString(5, book.getDescriptionRu());
+        statement.setInt(6, book.getCount());
     }
 }

@@ -1,5 +1,6 @@
 package com.ekros.library.model.service;
 
+import com.ekros.library.model.dao.config.DBCPDataSource;
 import com.ekros.library.model.dao.impl.UserRepo;
 import com.ekros.library.model.dao.interfaces.IUserRepo;
 import com.ekros.library.model.entity.User;
@@ -9,7 +10,7 @@ import java.util.List;
 
 public class UserService {
     private final IUserRepo userRepo;
-
+    private final int page = Integer.parseInt(DBCPDataSource.prop.getProperty("page.size"));
     public UserService() {
         this.userRepo = UserRepo.getInstance();
     }
@@ -35,7 +36,7 @@ public class UserService {
     }
 
     public List<User> getUsersPage(int from) throws SQLException {
-        return userRepo.getUsersPage(from, from+20);
+        return userRepo.getUsersPage(from, from+page);
     }
 
     public int getCount() throws SQLException{
