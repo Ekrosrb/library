@@ -1,5 +1,6 @@
 package com.ekros.library.controller.commands;
 
+import com.ekros.library.model.dao.config.DBCPDataSource;
 import com.ekros.library.model.entity.*;
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -87,7 +88,11 @@ public class CommandUtils {
     }
 
     public static boolean validateId(String id){
-        return id != null && !id.isEmpty();
+        return id != null && !id.isEmpty() && id.matches("^[0-9]+$");
+    }
+
+    public static int getPages(int size){
+        return (int) Math.ceil((double) size / (double) Integer.parseInt(DBCPDataSource.prop.getProperty("page.size")));
     }
 
 }

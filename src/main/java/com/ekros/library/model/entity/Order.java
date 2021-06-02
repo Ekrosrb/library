@@ -7,25 +7,28 @@ public class Order {
     private int userId;
     private int bookId;
     private Date term;
+    private Date orderDate;
     private long fine;
     private Status status;
 
     public Order() {
     }
 
-    public Order(int id, int userId, int bookId, Date term, long fine, Status status) {
+    public Order(int id, int userId, int bookId, Date term, Date orderDate, long fine, Status status) {
         this.id = id;
         this.userId = userId;
         this.bookId = bookId;
         this.term = term;
+        this.orderDate = orderDate;
         this.fine = fine;
         this.status = status;
     }
 
-    public Order(int userId, int bookId, Date term, long fine, Status status) {
+    public Order(int userId, int bookId, Date term, Date orderDate, long fine, Status status) {
         this.userId = userId;
         this.bookId = bookId;
         this.term = term;
+        this.orderDate = orderDate;
         this.fine = fine;
         this.status = status;
     }
@@ -60,6 +63,14 @@ public class Order {
 
     public void setTerm(Date term) {
         this.term = term;
+    }
+
+    public Date getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
     }
 
     public long getFine() {

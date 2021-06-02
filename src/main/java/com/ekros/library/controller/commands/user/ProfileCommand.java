@@ -1,5 +1,6 @@
 package com.ekros.library.controller.commands.user;
 
+import com.ekros.library.controller.commands.CommandUtils;
 import com.ekros.library.controller.commands.ICommand;
 import com.ekros.library.controller.commands.Path;
 import com.ekros.library.model.entity.AuthUser;
@@ -36,6 +37,7 @@ public class ProfileCommand implements ICommand {
         session.setAttribute("email", user.getEmail());
         session.setAttribute("phone", user.getPhone());
         session.setAttribute("birthday", user.getBirthday());
+        request.setAttribute("pages", CommandUtils.getPages(orderService.getUserOrdersCount(user.getId())));
         request.setAttribute("subList", orderService.getUserSubs(user.getId(), Integer.parseInt(from)));
 
         return Path.PROFILE;

@@ -5,7 +5,7 @@
     </form></c:if>
 <c:if test="${sessionScope.auth.role == 'LIBRARIAN' || sessionScope.auth.role == 'ADMIN'}">
     <form method="post" action="${pageContext.request.contextPath}/library/librarian">
-        <input type="hidden" name="type" value="pending">
+        <input type="hidden" name="type" value="PENDING"/>
         <button class="nav-link active text-light" role="button" aria-current="page" type="submit" style="background-color: transparent; border: none; cursor:pointer;"><fmt:message key="nav.lib"/></button>
     </form>
 </c:if>

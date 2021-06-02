@@ -29,7 +29,7 @@ public class AddOrderCommand implements ICommand {
             return Path.ERROR_PAGE;
         }
 
-        Order sub = new Order(Integer.parseInt(userId), Integer.parseInt(bookId), term, 0L, Status.PENDING);
+        Order sub = new Order(Integer.parseInt(userId), Integer.parseInt(bookId), term, null, 0L, Status.PENDING);
         orderService.addSub(sub);
         return Path.REDIRECT_PROFILE;
     }

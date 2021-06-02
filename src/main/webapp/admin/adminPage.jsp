@@ -8,7 +8,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="${pageContext.request.contextPath}/">Library</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -86,7 +86,7 @@
                             <fmt:message key="message.alert.delete"/>
                         </div>
                         <form method="post" action="${pageContext.request.contextPath}/library/deleteUser">
-                            <input type="text" name="id" value="${users.id}"/>
+                            <input type="hidden" name="id" value="${users.id}"/>
                             <input type="hidden" name="href" value="/library/admin">
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">

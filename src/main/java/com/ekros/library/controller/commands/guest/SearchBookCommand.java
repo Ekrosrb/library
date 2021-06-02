@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 public class SearchBookCommand implements ICommand {
 
     private final BookService bookService;
-    private Logger log = Logger.getLogger(SearchBookCommand.class);
+    private final Logger log = Logger.getLogger(SearchBookCommand.class);
     public SearchBookCommand(BookService bookService) {
         this.bookService = bookService;
     }
@@ -37,7 +37,7 @@ public class SearchBookCommand implements ICommand {
 
         int count = bookService.getCount(name);
         request.setAttribute("count", count);
-        request.setAttribute("pages", count/20);
+        request.setAttribute("pages", CommandUtils.getPages(count));
         request.setAttribute("bookName", name);
         return Path.INDEX_PAGE;
     }

@@ -8,7 +8,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="${pageContext.request.contextPath}/">Library</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -55,48 +55,95 @@
         <label for="phone" class="form-label text-dark"><fmt:message key="form.phone"/></label>
         <input class="form-control border border-dark rounded" id="phone" name = "phone" aria-describedby="phone number" value="${sessionScope.phone}" disabled>
     </div>
+    <div class="d-flex justify-content-center">
+        <ul class="pagination">
+            <c:forEach begin="1" end="${requestScope.pages}" varStatus="loop">
+                <li class="page-item">
+                    <form method="post" action="${pageContext.request.contextPath}/library/profile">
+                        <input type="hidden" name="from" value="${(loop.index-1)*20}"/>
+                        <button class="page-link text-light bg-dark" type="submit">${loop.index}</button>
+                    </form>
+                </li>
+            </c:forEach>
+        </ul>
+    </div>
     <div>
         <h3><fmt:message key="library.orders.list.title"/></h3>
-        <ul class="list-group border border-dark rounded">
+        <ul class="list-group border rounded">
             <c:choose>
                 <c:when test="${requestScope.subList.size() > 0}">
-                    <c:forEach items="${requestScope.subList}" var="sub">
-                        <li class="list-group-item">
-                            <p><fmt:message key="profile.order.info.id"/> : ${sub.id}</p>
-                            <c:choose>
-                                <c:when test="${sub.status == 'ACCEPTED'}">
-                                    <p class="alert alert-success" role="alert">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Term</th>
+                        <th scope="col">Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${requestScope.subList}" var="order">
+                    <tr>
+                        <c:choose>
+                            <c:when test="${order.status == 'ACCEPTED'}">
+                                <tr class="table-success">
+                                    <th scope="row">${order.id}</th>
+                                    <td>${order.term}</td>
+                                    <td>
                                         <fmt:message key="profile.order.info.status.accept"/>
-                                    </p>
-                                </c:when>
-                                <c:when test="${sub.status == 'PENDING'}">
-                                    <p class="alert alert-info" role="alert">
+                                    </td>
+                                </tr>
+                            </c:when>
+                            <c:when test="${order.status == 'PENDING'}">
+                                <tr class="table-info">
+                                    <th scope="row">${order.id}</th>
+                                    <td>${order.term}</td>
+                                    <td>
                                         <fmt:message key="profile.order.info.status.wait"/>
-                                    </p>
-                                </c:when>
-                                <c:when test="${sub.status == 'REJECTED'}">
-                                    <p class="alert alert-dark" role="alert">
-                                        <fmt:message key="profile.order.info.status.reject"/>
-                                    </p>
-                                </c:when>
-                                <c:when test="${sub.status == 'ON_USE'}">
-                                    <p class="alert alert-success" role="alert">
-                                        <fmt:message key="profile.order.info.status.on.use"/>
-                                    </p>
-                                </c:when>
-                                <c:when test="${sub.status == 'EXPIRED'}">
-                                    <p class="alert alert-danger" role="alert">
-                                        <fmt:message key="profile.order.info.status.expired"/>
-                                    </p>
-                                </c:when>
-                                <c:when test="${sub.status == 'CLOSED'}">
-                                    <p class="alert alert-light" role="alert">
-                                        <fmt:message key="profile.order.info.status.expired"/>
-                                    </p>
-                                </c:when>
-                            </c:choose>
-                        </li>
+                                    </td>
+                                </tr>
+                            </c:when>
+                            <c:when test="${order.status == 'REJECTED'}">
+                                <tr class="table-secondary">
+                                <th scope="row">${order.id}</th>
+                                <td>${order.term}</td>
+                                <td>
+                                    <fmt:message key="profile.order.info.status.reject"/>
+                                </td>
+                                </tr>
+                            </c:when>
+                            <c:when test="${order.status == 'ON_USE'}">
+                                <tr class="table-primary">
+                                <th scope="row">${order.id}</th>
+                                <td>${order.term}</td>
+                                <td>
+                                    <fmt:message key="profile.order.info.status.on.use"/>
+                                </td>
+                                </tr>
+                            </c:when>
+                            <c:when test="${order.status == 'EXPIRED'}">
+                                <tr class="table-danger">
+                                <th scope="row">${order.id}</th>
+                                <td>${order.term}</td>
+                                <td>
+                                    <fmt:message key="profile.order.info.status.expired"/>
+                                </td>
+                                </tr>
+                            </c:when>
+                            <c:when test="${order.status == 'CLOSED'}">
+                                <tr class="table-active">
+                                <th scope="row">${order.id}</th>
+                                <td>${order.term}</td>
+                                <td>
+                                    <fmt:message key="profile.order.info.status.closed"/>
+                                </td>
+                                </tr>
+
+                            </c:when>
+                        </c:choose>
+
                     </c:forEach>
+                    </tbody>
+                </table>
                 </c:when>
                 <c:otherwise>
                     <p><fmt:message key="library.orders.list.message"/></p>

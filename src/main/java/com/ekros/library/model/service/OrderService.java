@@ -3,6 +3,7 @@ import com.ekros.library.model.dao.config.DBCPDataSource;
 import com.ekros.library.model.dao.impl.OrderRepo;
 import com.ekros.library.model.entity.Order;
 import com.ekros.library.model.entity.OrderInfo;
+import com.ekros.library.model.entity.Status;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -22,17 +23,8 @@ public class OrderService {
         return subRepo.getOrders(from, from+page);
     }
 
-    public List<Order> getPendingSubs(int from) throws SQLException {
-        return subRepo.getPendingOrders(from, from+page);
-    }
-
-
     public List<Order> getUserSubs(int id, int from) throws SQLException {
         return subRepo.getUserOrders(id, from, from+page);
-    }
-
-    public List<Order> getExpiredOrders(int from) throws SQLException{
-        return subRepo.getExpiredOrders(from, from+page);
     }
 
     public void updateSub(Order sub) throws SQLException {
@@ -49,6 +41,38 @@ public class OrderService {
 
     public OrderInfo getOrderInfo(int id) throws SQLException {
         return subRepo.getOrderInfo(id);
+    }
+
+    public int getUserOrdersCount(int id) throws SQLException {
+        return subRepo.getUserOrdersCount(id);
+    }
+
+
+    public void updateStatus(int id, Status status) throws SQLException {
+        int bookValue = 0;
+        if(status == Status.ACCEPTED){
+           bookValue = -1;
+        }else if(status == Status.CLOSED){
+            bookValue = 1;
+        }
+
+        subRepo.updateStatus(id, status, bookValue);
+    }
+
+//    public void acceptOrder(int id) throws SQLException {
+//        subRepo.acceptOrder(id);
+//    }
+//
+//    public void closeOrder(int id) throws SQLException {
+//        subRepo.closeOrder(id);
+//    }
+
+    public List<Order> getOrdersByStatus(Status status, int from) throws SQLException {
+        return subRepo.getOrdersByStatus(status, from, from+page);
+    }
+
+    public int getStatusCount(Status status) throws SQLException {
+        return subRepo.getStatusCount(status);
     }
 
 

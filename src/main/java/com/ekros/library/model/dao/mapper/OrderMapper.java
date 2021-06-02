@@ -14,6 +14,7 @@ public class OrderMapper implements Mapper<Order>{
                 res.getInt("user_id"),
                 res.getInt("book_id"),
                 res.getDate("term"),
+                res.getDate("order_date"),
                 res.getLong("fine"),
                 Status.values()[res.getInt("status")]);
     }

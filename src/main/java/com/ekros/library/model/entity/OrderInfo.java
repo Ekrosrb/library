@@ -9,29 +9,32 @@ public class OrderInfo {
     private String email;
     private String phone;
     private Date term;
+    private Date orderDate;
     private long fine;
     private Status status;
 
     public OrderInfo() {
     }
 
-    public OrderInfo(int id, String bookName, String userName, String email, String phone, Date term, long fine, Status status) {
+    public OrderInfo(int id, String bookName, String userName, String email, String phone, Date term, Date orderDate, long fine, Status status) {
         this.id = id;
         this.bookName = bookName;
         this.userName = userName;
         this.email = email;
         this.phone = phone;
         this.term = term;
+        this.orderDate = orderDate;
         this.fine = fine;
         this.status = status;
     }
 
-    public OrderInfo(String bookName, String userName, String email, String phone, Date term, long fine, Status status) {
+    public OrderInfo(String bookName, String userName, String email, String phone, Date term, Date orderDate, long fine, Status status) {
         this.bookName = bookName;
         this.userName = userName;
         this.email = email;
         this.phone = phone;
         this.term = term;
+        this.orderDate = orderDate;
         this.fine = fine;
         this.status = status;
     }
@@ -82,6 +85,14 @@ public class OrderInfo {
 
     public void setTerm(Date term) {
         this.term = term;
+    }
+
+    public Date getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
     }
 
     public Status getStatus() {

@@ -22,7 +22,7 @@ CREATE TABLE books(
     edition VARCHAR(140) NOT NULL,
     description TEXT,
     description_ru TEXT,
-    count INT NOT NULL,
+    count INT UNSIGNED NOT NULL,
     UNIQUE (name, author)
 );
 
@@ -31,20 +31,19 @@ CREATE TABLE orders(
     user_id INT NOT NULL,
     book_id INT NOT NULL,
     term DATE NOT NULL,
+    order_date DATE DEFAULT (CURRENT_DATE),
     fine LONG NOT NULL,
     status INT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (book_id) REFERENCES books(id) ON DELETE CASCADE ,
+    FOREIGN KEY (book_id) REFERENCES books(id) ON DELETE CASCADE,
     UNIQUE (user_id, book_id)
 );
-
-
 
 INSERT INTO users(first_name, last_name, email, password, birthday, phone, role, block)
 VALUES
        ('Admin', 'Admin', 'admin@mail.com', '827ccb0eea8a706c4c34a16891f84e7b', '2000-01-01', '123456', 0, false),
-       ('Librarian', 'Librarian', 'lib@mail.com', '827ccb0eea8a706c4c34a16891f84e7b', '2000-01-01', '123456', 1, false);
-
+       ('Librarian', 'Librarian', 'lib@mail.com', '827ccb0eea8a706c4c34a16891f84e7b', '2000-01-01', '123456', 1, false),
+       ('Mail', 'Mail', 'mail@mail.com', '827ccb0eea8a706c4c34a16891f84e7b', '2000-01-01', '123456', 2, false);
 
 INSERT INTO books(name, author, edition, description, description_ru, count)
 VALUES

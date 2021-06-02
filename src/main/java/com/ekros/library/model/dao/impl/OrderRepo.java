@@ -6,6 +6,7 @@ import com.ekros.library.model.dao.mapper.OrderInfoMapper;
 import com.ekros.library.model.dao.mapper.OrderMapper;
 import com.ekros.library.model.entity.Order;
 import com.ekros.library.model.entity.OrderInfo;
+import com.ekros.library.model.entity.Status;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -19,14 +20,14 @@ public class OrderRepo implements IOrderRepo {
     private static final String SQL_DELETE_ORDER = "DELETE FROM orders WHERE id = ?";
     private static final String SQL_UPDATE_ORDER = "UPDATE orders SET user_id = ?, book_id = ?, term = ?, fine = ?, status = ? WHERE id = ?";
     private static final String SQL_SELECT_ORDER = "SELECT * FROM orders WHERE id = ?";
-    private static final String SQL_SELECT_PENDING = "SELECT * FROM orders WHERE status = 5 LIMIT ?, ?";
-    private static final String SQL_SELECT_EXPIRED = "SELECT * FROM orders WHERE status = 3 LIMIT ?, ?";
+    private static final String SQL_SELECT_BY_STATUS = "SELECT * FROM orders WHERE status = ? LIMIT ?, ?";
     private static final String SQL_SELECT_ORDERS = "SELECT * FROM orders LIMIT ?, ?";
-    private static final String SQL_PENDING_COUNT = "SELECT COUNT(*) FROM orders WHERE status = 5";
-    private static final String SQL_EXPIRED_COUNT = "SELECT COUNT(*) FROM orders WHERE status = 3";
     private static final String SQL_COUNT = "SELECT COUNT(*) FROM orders";
-    private static final String SQL_USER_ORDERS = "SELECT * FROM orders WHERE user_id = ? LIMIT ?, ?";
-    private static final String SQL_SELECT_ORDER_INFO = "SELECT orders.id, books.name, users.first_name, users.email, users.phone, orders.term, orders.fine, orders.status FROM orders, books, users WHERE orders.user_id = users.id AND orders.book_id = books.id AND orders.id = ?";
+    private static final String SQL_STATUS_COUNT = "SELECT COUNT(*) FROM orders WHERE status = ?";
+    private static final String SQL_USER_ORDERS = "SELECT * FROM orders WHERE user_id = ? ORDER BY order_date DESC LIMIT ?, ?";
+    private static final String SQL_SELECT_ORDER_INFO = "SELECT orders.id, books.name, users.first_name, users.email, users.phone, orders.term, orders.order_date, orders.fine, orders.status FROM orders, books, users WHERE orders.user_id = users.id AND orders.book_id = books.id AND orders.id = ?";
+    private static final String SQL_USER_ORDERS_COUNT = "SELECT COUNT(*) FROM orders WHERE user_id = ?";
+    private static final String SQL_UPDATE_STATUS = "UPDATE orders, books SET orders.status = ?, books.count = books.count + ? WHERE orders.book_id = books.id AND orders.id = ?";
 
     private static OrderRepo orderRepo;
 
@@ -95,38 +96,6 @@ public class OrderRepo implements IOrderRepo {
     }
 
     @Override
-    public List<Order> getPendingOrders(int from, int to) throws SQLException{
-        OrderMapper mapper = new OrderMapper();
-        List<Order> sub = new ArrayList<>();
-        try(Connection conn = DBCPDataSource.getConnection();
-            PreparedStatement statement = conn.prepareStatement(SQL_SELECT_PENDING)){
-            statement.setInt(1, from);
-            statement.setInt(2, to);
-            ResultSet res = statement.executeQuery();
-            while(res.next()){
-                sub.add(mapper.getFromResultSet(res));
-            }
-        }
-        return sub;
-    }
-
-    @Override
-    public List<Order> getExpiredOrders(int from, int to) throws SQLException{
-        OrderMapper mapper = new OrderMapper();
-        List<Order> sub = new ArrayList<>();
-        try(Connection conn = DBCPDataSource.getConnection();
-            PreparedStatement statement = conn.prepareStatement(SQL_SELECT_EXPIRED)){
-            statement.setInt(1, from);
-            statement.setInt(2, to);
-            ResultSet res = statement.executeQuery();
-            while(res.next()){
-                sub.add(mapper.getFromResultSet(res));
-            }
-        }
-        return sub;
-    }
-
-    @Override
     public List<Order> getOrders(int from, int to) throws SQLException{
         OrderMapper mapper = new OrderMapper();
         List<Order> sub = new ArrayList<>();
@@ -160,22 +129,37 @@ public class OrderRepo implements IOrderRepo {
     }
 
     @Override
-    public int getExpiredCount() throws SQLException{
+    public List<Order> getOrdersByStatus(Status status, int from, int to) throws SQLException{
+        OrderMapper mapper = new OrderMapper();
+        List<Order> sub = new ArrayList<>();
         try(Connection conn = DBCPDataSource.getConnection();
-            PreparedStatement statement = conn.prepareStatement(SQL_PENDING_COUNT)){
+            PreparedStatement statement = conn.prepareStatement(SQL_SELECT_BY_STATUS)){
+            statement.setInt(1, status.ordinal());
+            statement.setInt(2, from);
+            statement.setInt(3, to);
             ResultSet res = statement.executeQuery();
-            int count = 0;
-            if(res.next()){
-                count = res.getInt(1);
+            while(res.next()){
+                sub.add(mapper.getFromResultSet(res));
             }
-            return count;
+        }
+        return sub;
+    }
+    @Override
+    public void updateStatus(int id, Status status, int bookValue) throws SQLException {
+        try(Connection conn = DBCPDataSource.getConnection();
+            PreparedStatement statement = conn.prepareStatement(SQL_UPDATE_STATUS)){
+            statement.setInt(1, status.ordinal());
+            statement.setInt(2, bookValue);
+            statement.setInt(3, id);
+            statement.executeUpdate();
         }
     }
 
     @Override
-    public int getPendingCount() throws SQLException{
+    public int getStatusCount(Status status) throws SQLException {
         try(Connection conn = DBCPDataSource.getConnection();
-            PreparedStatement statement = conn.prepareStatement(SQL_EXPIRED_COUNT)){
+            PreparedStatement statement = conn.prepareStatement(SQL_STATUS_COUNT)){
+            statement.setInt(1, status.ordinal());
             ResultSet res = statement.executeQuery();
             int count = 0;
             if(res.next()){
@@ -210,5 +194,19 @@ public class OrderRepo implements IOrderRepo {
             }
         }
         return null;
+    }
+
+    @Override
+    public int getUserOrdersCount(int id) throws SQLException {
+        try(Connection conn = DBCPDataSource.getConnection();
+            PreparedStatement statement = conn.prepareStatement(SQL_USER_ORDERS_COUNT)){
+            statement.setInt(1, id);
+            ResultSet res = statement.executeQuery();
+            int count = 0;
+            if(res.next()){
+                count = res.getInt(1);
+            }
+            return count;
+        }
     }
 }

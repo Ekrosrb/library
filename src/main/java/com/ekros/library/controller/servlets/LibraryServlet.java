@@ -2,14 +2,13 @@ package com.ekros.library.controller.servlets;
 
 import com.ekros.library.controller.commands.*;
 import com.ekros.library.controller.commands.admin.*;
+import com.ekros.library.controller.commands.librarian.ChangeStatusCommand;
 import com.ekros.library.controller.commands.user.UpdateUserCommand;
 import com.ekros.library.controller.commands.guest.LocaleCommand;
 import com.ekros.library.controller.commands.guest.LoginCommand;
 import com.ekros.library.controller.commands.guest.SearchBookCommand;
 import com.ekros.library.controller.commands.guest.SiginCommand;
-import com.ekros.library.controller.commands.librarian.AcceptSubCommand;
 import com.ekros.library.controller.commands.librarian.LibrarianCommand;
-import com.ekros.library.controller.commands.librarian.RejectSubCommand;
 import com.ekros.library.controller.commands.user.AddOrderCommand;
 import com.ekros.library.controller.commands.user.LogoutCommand;
 import com.ekros.library.controller.commands.user.ProfileCommand;
@@ -51,8 +50,7 @@ public class LibraryServlet extends HttpServlet {
         commands.put("deleteBook", new DeleteBookCommand(bookService));
         commands.put("orderBook", new AddOrderCommand(orderService));
         commands.put("librarian", new LibrarianCommand(orderService));
-        commands.put("acceptSub", new AcceptSubCommand(orderService));
-        commands.put("rejectSub", new RejectSubCommand(orderService));
+        commands.put("changeStatus", new ChangeStatusCommand(orderService));
     }
 
     @Override

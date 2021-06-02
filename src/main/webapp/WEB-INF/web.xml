@@ -122,8 +122,7 @@
     <filter-mapping>
         <filter-name>LibrarianFilter</filter-name>
         <url-pattern>/library/librarian</url-pattern>
-        <url-pattern>/library/acceptSub</url-pattern>
-        <url-pattern>/library/rejectSub</url-pattern>
+        <url-pattern>/library/changeStatus</url-pattern>
     </filter-mapping>
 
     <filter>

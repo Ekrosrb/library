@@ -16,7 +16,8 @@ public class OrderInfoMapper implements Mapper<OrderInfo>{
                 res.getString(4),
                 res.getString(5),
                 res.getDate(6),
-                res.getLong(7),
-                Status.values()[res.getInt(8)]);
+                res.getDate(7),
+                res.getLong(8),
+                Status.values()[res.getInt(9)]);
     }
 }
