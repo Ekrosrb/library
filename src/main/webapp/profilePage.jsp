@@ -55,18 +55,7 @@
         <label for="phone" class="form-label text-dark"><fmt:message key="form.phone"/></label>
         <input class="form-control border border-dark rounded" id="phone" name = "phone" aria-describedby="phone number" value="${sessionScope.phone}" disabled>
     </div>
-    <div class="d-flex justify-content-center">
-        <ul class="pagination">
-            <c:forEach begin="1" end="${requestScope.pages}" varStatus="loop">
-                <li class="page-item">
-                    <form method="post" action="${pageContext.request.contextPath}/library/profile">
-                        <input type="hidden" name="from" value="${(loop.index-1)*20}"/>
-                        <button class="page-link text-light bg-dark" type="submit">${loop.index}</button>
-                    </form>
-                </li>
-            </c:forEach>
-        </ul>
-    </div>
+    <%@ include file="WEB-INF/jspf/content/profilePagination.jspf"%>
     <div>
         <h3><fmt:message key="library.orders.list.title"/></h3>
         <ul class="list-group border rounded">

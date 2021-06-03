@@ -1,0 +1,44 @@
+<%@ include file="/WEB-INF/jspf/taglib.jspf" %>
+
+<div class="d-flex justify-content-start" style="margin-top: 20px">
+<ul class="pagination">
+    <c:choose>
+        <c:when test="${requestScope.from > 0}">
+            <li class="page-item">
+                <form method="post" action="${pageContext.request.contextPath}/library/admin">
+                    <input type="hidden" name="from" value="${(requestScope.from) - 20}"/>
+                    <button class="page-link text-light bg-dark" type="submit" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </button>
+                </form>
+            </li>
+        </c:when>
+        <c:otherwise>
+            <li class="page-item disabled">
+                <button class="page-link" type="button" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </button>
+            </li>
+        </c:otherwise>
+    </c:choose>
+    <c:choose>
+        <c:when test="${(requestScope.from+20) < requestScope.count}">
+            <li class="page-item">
+                <form method="post" action="${pageContext.request.contextPath}/library/admin">
+                    <input type="hidden" name="from" value="${(requestScope.from) + 20}"/>
+                    <button class="page-link text-light bg-dark" type="submit" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </button>
+                </form>
+            </li>
+        </c:when>
+        <c:otherwise>
+            <li class="page-item disabled">
+                <button class="page-link" type="button" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </button>
+            </li>
+        </c:otherwise>
+    </c:choose>
+</ul>
+</div>

@@ -52,7 +52,6 @@
                     <input class="dropdown-item" type="submit" name="type" value="info"/>
                 </div>
             </form>
-
     </div>
     <c:choose>
         <c:when test="${requestScope.type eq 'info'}">
@@ -139,20 +138,7 @@
             </c:choose>
         </c:when>
         <c:otherwise>
-            <div class="d-flex justify-content-start" style="margin-top: 20px">
-                <ul class="pagination">
-                    <c:forEach begin="1" end="${requestScope.pages}" varStatus="loop">
-                        <li class="page-item">
-                            <form method="post" action="${pageContext.request.contextPath}/library/librarian">
-                                <input type="hidden" name="from" value="${(loop.index-1)*20}"/>
-                                <input type="hidden" name="type" value="${requestScope.type}"/>
-                                <button class="page-link text-light bg-dark" type="submit">${loop.index}</button>
-                            </form>
-                        </li>
-                    </c:forEach>
-                </ul>
-            </div>
-
+            <%@ include file="/WEB-INF/jspf/content/librarianPagination.jspf"%>
             <div>
                 <h3><fmt:message key="library.orders.list.title"/></h3>
                 <c:choose>

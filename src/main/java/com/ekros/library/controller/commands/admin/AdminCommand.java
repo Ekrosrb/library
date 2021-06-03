@@ -2,11 +2,9 @@ package com.ekros.library.controller.commands.admin;
 
 import com.ekros.library.controller.commands.ICommand;
 import com.ekros.library.controller.commands.Path;
-import com.ekros.library.model.entity.User;
 import com.ekros.library.model.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 public class AdminCommand implements ICommand {
 
@@ -19,15 +17,14 @@ public class AdminCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest request) throws Exception {
         String from = (String) request.getAttribute("from");
-        List<User> users;
-        if(from == null){
-            users = userService.getUsersPage(0);
-        }else{
-            users = userService.getUsersPage(Integer.parseInt(from));
+
+        if(from == null) {
+            from = "0";
         }
-        request.setAttribute("userList", users);
+
+        request.setAttribute("userList", userService.getUsersPage(Integer.parseInt(from)));
         request.setAttribute("count", userService.getCount());
-        request.setAttribute("pages", 1 + users.size()/20);
+        request.setAttribute("from", Integer.parseInt(from));
         return Path.ADMIN_PAGE;
     }
 }

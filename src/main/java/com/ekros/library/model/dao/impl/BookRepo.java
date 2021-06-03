@@ -18,7 +18,7 @@ public class BookRepo implements IBookRepo {
     private final String SQL_DELETE_BOOK = "DELETE FROM books WHERE id = ?";
     private final String SQL_UPDATE_BOOK = "UPDATE books SET name = ?, author = ?, edition = ?, description = ?, description_ru = ?, count = ? WHERE id = ?";
     private final String SQL_SELECT_BOOK_BY_ID = "SELECT * FROM books WHERE id = ?";
-    private final String SQL_SELECT_BOOKS_BY_CONTAINS_NAME = "SELECT * FROM books WHERE name LIKE ? LIMIT ?, ?";
+    private final String SQL_SELECT_BOOKS_BY_CONTAINS_NAME = "SELECT * FROM books WHERE name LIKE ? ORDER BY %s DESC LIMIT ?, ?";
     private final String SQL_GET_BOOKS_COUNT = "SELECT COUNT(*) FROM books WHERE name LIKE ?";
 
     private static BookRepo bookRepo;
@@ -83,11 +83,12 @@ public class BookRepo implements IBookRepo {
     }
 
     @Override
-    public List<Book> getBooksByContainsName(String name, int from, int to) throws SQLException{
+    public List<Book> getBooksByContainsName(String name, String orderBy, int from, int to) throws SQLException{
         BookMapper mapper = new BookMapper();
         List<Book> books = new ArrayList<>();
         try(Connection conn = DBCPDataSource.getConnection();
-            PreparedStatement statement = conn.prepareStatement(SQL_SELECT_BOOKS_BY_CONTAINS_NAME)) {
+            PreparedStatement statement =
+                    conn.prepareStatement(String.format(SQL_SELECT_BOOKS_BY_CONTAINS_NAME, orderBy))) {
 
             statement.setString(1, name);
             statement.setInt(2, from);

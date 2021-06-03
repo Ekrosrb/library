@@ -20,6 +20,7 @@ public class SearchBookCommand implements ICommand {
     public String execute(HttpServletRequest request) throws Exception {
         String name = request.getParameter("bookName");
         String from = request.getParameter("from");
+        String orderBy = request.getParameter("orderBy");
 
         log.info("Search: " + name);
 
@@ -33,11 +34,16 @@ public class SearchBookCommand implements ICommand {
             from = "0";
         }
 
-        request.setAttribute("books", bookService.getBooksByContainName(name, Integer.parseInt(from)));
+        if(orderBy == null || orderBy.isEmpty()){
+            orderBy = "author";
+        }
+
+        request.setAttribute("books", bookService.getBooksByContainName(name, orderBy, Integer.parseInt(from)));
 
         int count = bookService.getCount(name);
         request.setAttribute("count", count);
-        request.setAttribute("pages", CommandUtils.getPages(count));
+        request.setAttribute("orderBy", orderBy);
+        request.setAttribute("from", Integer.parseInt(from));
         request.setAttribute("bookName", name);
         return Path.INDEX_PAGE;
     }

@@ -41,9 +41,11 @@ CREATE TABLE orders(
 
 INSERT INTO users(first_name, last_name, email, password, birthday, phone, role, block)
 VALUES
-       ('Admin', 'Admin', 'admin@mail.com', '827ccb0eea8a706c4c34a16891f84e7b', '2000-01-01', '123456', 0, false),
-       ('Librarian', 'Librarian', 'lib@mail.com', '827ccb0eea8a706c4c34a16891f84e7b', '2000-01-01', '123456', 1, false),
-       ('Mail', 'Mail', 'mail@mail.com', '827ccb0eea8a706c4c34a16891f84e7b', '2000-01-01', '123456', 2, false);
+       ('Admin', 'Admin', 'admin@mail.com', '827ccb0eea8a706c4c34a16891f84e7b', '2000-05-11', '123456', 0, false),
+       ('Librarian', 'Librarian', 'lib@mail.com', '827ccb0eea8a706c4c34a16891f84e7b', '2000-01-01', '54265624', 1, false),
+       ('Mail', 'Mail', 'mail@mail.com', '827ccb0eea8a706c4c34a16891f84e7b', '2001-02-01', '76513735', 2, false),
+       ('Mail2', 'Mail2', 'mail2@mail.com', '827ccb0eea8a706c4c34a16891f84e7b', '2000-01-03', '2156674', 2, false);
+
 
 INSERT INTO books(name, author, edition, description, description_ru, count)
 VALUES
@@ -87,3 +89,18 @@ VALUES
        ('The Changeling', 'Kate Horsley', 'book inc', 'super book3', 'супер книга 3', 3),
        ('The Changeling (Daughters of England #15)', 'Philippa Carr', ' edition inc', 'super book4', 'супер книга 4', 7),
        ('The Known World', 'Edward P. Jones', 'book edit', 'super book5', 'супер книга 5', 1);
+
+INSERT INTO orders(user_id, book_id, term, order_date, fine, status)
+VALUES
+(4, 1, '2021-05-05', '2021-03-03', 27, 3),
+(4, 5, '2021-05-05', '2021-03-11', 17, 3),
+(4, 2, '2021-05-05', '2021-04-11', 14, 3),
+(4, 8, '2021-05-05', '2021-03-12', 21, 3),
+(3, 17, '2021-05-05', '2021-03-03', 0, 2),
+(3, 9, '2021-05-05', '2021-03-03', 0, 2),
+(3, 4, '2021-05-05', '2021-03-03', 0, 0),
+(3, 5, '2021-05-05', '2021-03-03', 0, 1),
+(3, 16, '2021-05-05', '2021-03-03', 0, 4),
+(1, 16, '2021-05-05', '2021-03-03', 0, 4),
+(1, 8, '2021-05-05', '2021-03-03', 0, 5),
+(1, 9, '2021-05-05', '2021-03-03', 0, 5);

@@ -39,11 +39,25 @@
                     </c:otherwise>
                 </c:choose>
             </ul>
-            <form class="form-inline mx-auto" method="post" action="${pageContext.request.contextPath}/library/books">
-                <input name="from" type="hidden" value="0">
-                <input class="form-control mr-sm-2" type="search" placeholder="<fmt:message key="nav.search"/>" aria-label="Search" name="bookName" value="${requestScope.bookName}"/>
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><fmt:message key="nav.search"/></button>
-            </form>
+            <div class="d-flex justify-content-center mx-auto">
+                <form class="form-inline dropdown" method="post" action="${pageContext.request.contextPath}/library/books" style="margin-right: 15px">
+                    <input type="hidden" name="bookName" value="${requestScope.bookName}">
+                    <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        ${requestScope.orderBy}
+                    </button>
+                    <div class="dropdown-menu">
+                        <input class="dropdown-item" type="submit" name="orderBy" value="name"/>
+                        <input class="dropdown-item" type="submit" name="orderBy" value="author"/>
+                        <input class="dropdown-item" type="submit" name="orderBy" value="edition"/>
+                    </div>
+                </form>
+                <form class="form-inline" method="post" action="${pageContext.request.contextPath}/library/books">
+                    <input name="from" type="hidden" value="0">
+                    <input name="orderBy" type="hidden"  value="${requestScope.orderBy}"/>
+                    <input class="form-control mr-sm-2" type="search" placeholder="<fmt:message key="nav.search"/>" aria-label="Search" name="bookName" value="${requestScope.bookName}"/>
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><fmt:message key="nav.search"/></button>
+                </form>
+            </div>
             <div class="nav-item">
                 <%@ include file="WEB-INF/jspf/content/navRoleButtons.jspf"%>
             </div>

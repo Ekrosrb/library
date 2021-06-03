@@ -42,7 +42,18 @@
     </div>
 </c:if>
 <div style="margin-left: 20%; margin-right: 20%; padding: 5%">
+
+    <div class="d-flex justify-content-center" style="margin-top: 15px">
+        <form class="form-inline mx-auto" method="post" action="${pageContext.request.contextPath}/library/admin">
+            <input type="hidden" name="type" value="info">
+            <input class="form-control mr-sm-2" type="search" placeholder="<fmt:message key="nav.search"/>" aria-label="Search" name="id"/>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><fmt:message key="nav.search"/></button>
+        </form>
+    </div>
+
+
     <%@ include file="../WEB-INF/jspf/content/addUserModal.jspf"%>
+    <%@ include file="../WEB-INF/jspf/content/adminPagination.jspf"%>
     <ul class="list-group">
         <c:forEach items="${requestScope.userList}" var="users">
 

@@ -37,7 +37,8 @@ public class ProfileCommand implements ICommand {
         session.setAttribute("email", user.getEmail());
         session.setAttribute("phone", user.getPhone());
         session.setAttribute("birthday", user.getBirthday());
-        request.setAttribute("pages", CommandUtils.getPages(orderService.getUserOrdersCount(user.getId())));
+        request.setAttribute("count", orderService.getUserOrdersCount(user.getId()));
+        request.setAttribute("from", Integer.parseInt(from));
         request.setAttribute("subList", orderService.getUserSubs(user.getId(), Integer.parseInt(from)));
 
         return Path.PROFILE;

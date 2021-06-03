@@ -2,14 +2,47 @@
 
 <div class="d-flex justify-content-center" style="margin-top: 20px">
 <ul class="pagination">
-    <c:forEach begin="1" end="${requestScope.pages}" varStatus="loop">
-        <li class="page-item">
-            <form method="post" action="${pageContext.request.contextPath}/library/books">
-                <input type="hidden" name="from" value="${(loop.index-1)*20}"/>
-                <input type="hidden" name="bookName" value="${requestScope.bookName}"/>
-                <button class="page-link text-light bg-dark" type="submit">${loop.index}</button>
-            </form>
-        </li>
-    </c:forEach>
+    <c:choose>
+        <c:when test="${requestScope.from > 0}">
+            <li class="page-item">
+                <form method="post" action="${pageContext.request.contextPath}/library/books">
+                    <input type="hidden" name="from" value="${(requestScope.from) - 20}"/>
+                    <input type="hidden" name="bookName" value="${requestScope.bookName}"/>
+                    <input type="hidden" name="orderBy" value="${requestScope.orderBy}"/>
+                    <button class="page-link text-light bg-dark" type="submit" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </button>
+                </form>
+            </li>
+        </c:when>
+        <c:otherwise>
+            <li class="page-item disabled">
+                <button class="page-link" type="button" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </button>
+            </li>
+        </c:otherwise>
+    </c:choose>
+    <c:choose>
+        <c:when test="${(requestScope.from+20) < requestScope.count}">
+            <li class="page-item">
+                <form method="post" action="${pageContext.request.contextPath}/library/books">
+                    <input type="hidden" name="from" value="${(requestScope.from) + 20}"/>
+                    <input type="hidden" name="bookName" value="${requestScope.bookName}"/>
+                    <input type="hidden" name="orderBy" value="${requestScope.orderBy}"/>
+                    <button class="page-link text-light bg-dark" type="submit" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </button>
+                </form>
+            </li>
+        </c:when>
+        <c:otherwise>
+            <li class="page-item disabled">
+                <button class="page-link" type="button" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </button>
+            </li>
+        </c:otherwise>
+    </c:choose>
 </ul>
 </div>

@@ -40,7 +40,8 @@ public class LibrarianCommand implements ICommand {
         Status status = Status.valueOf(type);
 
         request.setAttribute("orders", orderService.getOrdersByStatus(status, Integer.parseInt(from)));
-        request.setAttribute("pages", CommandUtils.getPages(orderService.getStatusCount(status)));
+        request.setAttribute("count", orderService.getStatusCount(status));
+        request.setAttribute("from", Integer.parseInt(from));
 
         return Path.LIBRARIAN_PAGE;
     }

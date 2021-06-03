@@ -32,8 +32,8 @@ public class BookService {
         return bookRepo.getBookById(id);
     }
 
-    public List<Book> getBooksByContainName(String name, int from) throws SQLException{
-        return bookRepo.getBooksByContainsName("%" + name + "%", from, from+page);
+    public List<Book> getBooksByContainName(String name, String orderBy, int from) throws SQLException{
+        return bookRepo.getBooksByContainsName("%" + name + "%", orderBy, from, from+page);
     }
 
     public int getCount(String name) throws SQLException {

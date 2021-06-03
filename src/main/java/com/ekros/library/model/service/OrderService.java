@@ -52,20 +52,13 @@ public class OrderService {
         int bookValue = 0;
         if(status == Status.ACCEPTED){
            bookValue = -1;
-        }else if(status == Status.CLOSED){
+        }else if(status == Status.CLOSED || status == Status.REJECTED){
             bookValue = 1;
         }
 
         subRepo.updateStatus(id, status, bookValue);
     }
 
-//    public void acceptOrder(int id) throws SQLException {
-//        subRepo.acceptOrder(id);
-//    }
-//
-//    public void closeOrder(int id) throws SQLException {
-//        subRepo.closeOrder(id);
-//    }
 
     public List<Order> getOrdersByStatus(Status status, int from) throws SQLException {
         return subRepo.getOrdersByStatus(status, from, from+page);
