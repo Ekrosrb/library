@@ -6,5 +6,6 @@ public enum Status {
     ON_USE,
     EXPIRED,
     CLOSED,
-    PENDING
+    PENDING,
+    PAID
 }

@@ -1,8 +1,9 @@
 package com.ekros.library.model.entity;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class OrderInfo {
+public class OrderInfo implements Serializable {
     private int id;
     private String bookName;
     private String userName;

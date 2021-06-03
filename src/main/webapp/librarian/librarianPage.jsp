@@ -37,7 +37,7 @@
 <div style="margin-left: 20%; margin-right: 20%; padding: 5%">
     <div class="d-flex justify-content-start dropdown">
 
-            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 ${requestScope.type}
             </button>
             <form action="${pageContext.request.contextPath}/library/librarian" method="post">
@@ -48,6 +48,7 @@
                     <input class="dropdown-item" type="submit" name="type" value="REJECTED"/>
                     <input class="dropdown-item" type="submit" name="type" value="ON_USE"/>
                     <input class="dropdown-item" type="submit" name="type" value="CLOSED"/>
+                    <input class="dropdown-item" type="submit" name="type" value="PAID"/>
                     <div class="dropdown-divider"></div>
                     <input class="dropdown-item" type="submit" name="type" value="info"/>
                 </div>
@@ -120,12 +121,40 @@
                         </form>
                     </c:if>
 
-                    <c:if test="${requestScope.order.status == 'ON_USE'}">
+                    <c:if test="${requestScope.order.status == 'ON_USE' || requestScope.order.status == 'PAID'}">
                         <form method="post" action="${pageContext.request.contextPath}/library/changeStatus">
                             <input type="hidden" name="id" value="${requestScope.order.id}"/>
                             <input type="hidden" name="status" value="CLOSED"/>
                             <button type="submit" class="btn btn-outline-secondary" style="margin: 2px"><fmt:message key="profile.order.info.status.closed"/></button>
                         </form>
+                        <div>
+                            <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#addFineModal" style="margin: 2px"><fmt:message key="pay.add.fine"/></button>
+                        </div>
+                        <div class="modal fade" id="addFineModal" data-backdrop="show" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="staticBackdropLabel"><fmt:message key="library.orders.list.view"/></h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form method="post" action="${pageContext.request.contextPath}/library/addFine">
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <label for="fineModal" class="form-label text-dark"><fmt:message key="library.orders.info.book.fine"/></label>
+                                            <input class="form-control" id="fineModal" name = "fine" aria-describedby="fine" value="${requestScope.order.fine}">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input type="hidden" name="id" value="${requestScope.order.id}"/>
+                                        <button type="submit" class="btn btn-outline-primary" style="margin: 2px"><fmt:message key="modal.add.user.confirm"/></button>
+                                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"><fmt:message key="modal.edit.user.discard"/></button>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </c:if>
 
                 </div>

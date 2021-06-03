@@ -32,6 +32,68 @@
     </div>
 
 </nav>
+    <c:if test="${not empty requestScope.order}">
+
+<div class="modal fade" id="orderInfo" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="orderInfoLabel" aria-hidden="true" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="orderInfoLabel"><fmt:message key="library.orders.list.view"/></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3 ">
+                    <label for="1userName" class="form-label text-dark"><fmt:message key="library.orders.info.user.name"/></label>
+                    <input class="form-control border border-dark rounded" id="1userName" name = "userName" value="${requestScope.order.userName}" disabled>
+                </div>
+                <div class="mb-3">
+                    <label for="1email" class="form-label text-dark"><fmt:message key="library.orders.info.user.email"/></label>
+                    <input class="form-control border border-dark rounded" type="email" id="1email" name = "email" value="${requestScope.order.email}" disabled>
+                </div>
+
+                <div class="mb-3">
+                    <label for="1phone" class="form-label text-dark"><fmt:message key="form.phone"/></label>
+                    <input type="number" class="form-control border border-dark rounded" id="1phone" name = "phone" value="${requestScope.order.phone}" disabled>
+                </div>
+
+                <div class="mb-3">
+                    <label for="1bookName" class="form-label text-dark"><fmt:message key="library.orders.info.book.name"/></label>
+                    <input class="form-control border border-dark rounded" id="1bookName" name="bookName" value="${requestScope.order.bookName}" disabled>
+                </div>
+                <div class="mb-3">
+                    <label for="1term" class="form-label text-dark"><fmt:message key="form.order.term"/></label>
+                    <input class="form-control border border-dark rounded" type="date" id="1term" name = "term" value="${requestScope.order.term}" disabled>
+                </div>
+                <div class="mb-3">
+                    <label for="1term" class="form-label text-dark"><fmt:message key="form.order.date"/></label>
+                    <input class="form-control border border-dark rounded" type="date" id="1date" name = "date" value="${requestScope.order.orderDate}" disabled>
+                </div>
+                <div class="mb-3">
+                    <label for="1status" class="form-label text-dark"><fmt:message key="profile.order.info.status"/></label>
+                    <input class="form-control border border-dark rounded" id="1status" name = "status" value="${requestScope.order.status}" disabled>
+                </div>
+                <div class="mb-3">
+                    <label for="1fine" class="form-label text-dark"><fmt:message key="library.orders.info.book.fine"/></label>
+                    <input class="form-control border border-dark rounded" id="1fine" name = "fine" value="${requestScope.order.fine}" disabled>
+                </div>
+                <div class="d-flex justify-content-start">
+                    <c:if test="${requestScope.order.status == 'EXPIRED'}">
+                        <form method="post" action="${pageContext.request.contextPath}/library/payFine">
+                            <input type="hidden" name="id" value="${requestScope.order.id}"/>
+                            <button type="submit" class="btn btn-outline-primary" style="margin: 2px"><fmt:message key="pay.fine"/></button>
+                        </form>
+                    </c:if>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    </c:if>
+
 <div style="margin-left: 20%; margin-right: 20%; padding: 5%">
     <div class="mb-3 ">
         <label for="firstName" class="form-label text-dark"><fmt:message key="form.firstName"/></label>
@@ -55,6 +117,7 @@
         <label for="phone" class="form-label text-dark"><fmt:message key="form.phone"/></label>
         <input class="form-control border border-dark rounded" id="phone" name = "phone" aria-describedby="phone number" value="${sessionScope.phone}" disabled>
     </div>
+
     <%@ include file="WEB-INF/jspf/content/profilePagination.jspf"%>
     <div>
         <h3><fmt:message key="library.orders.list.title"/></h3>
@@ -67,11 +130,11 @@
                         <th scope="col">Id</th>
                         <th scope="col">Term</th>
                         <th scope="col">Status</th>
+                        <th scope="col">Action</th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach items="${requestScope.subList}" var="order">
-                    <tr>
                         <c:choose>
                             <c:when test="${order.status == 'ACCEPTED'}">
                                 <tr class="table-success">
@@ -79,6 +142,12 @@
                                     <td>${order.term}</td>
                                     <td>
                                         <fmt:message key="profile.order.info.status.accept"/>
+                                    </td>
+                                    <td class="d-flex justify-content-end">
+                                        <form method="post" action="${pageContext.request.contextPath}/library/profile">
+                                            <input type="hidden" name="id" value="${order.id}"/>
+                                            <button type="submit" class="btn btn-outline-primary" style="margin: 2px"><fmt:message key="library.orders.list.view"/></button>
+                                        </form>
                                     </td>
                                 </tr>
                             </c:when>
@@ -89,6 +158,12 @@
                                     <td>
                                         <fmt:message key="profile.order.info.status.wait"/>
                                     </td>
+                                    <td class="d-flex justify-content-end">
+                                        <form method="post" action="${pageContext.request.contextPath}/library/profile">
+                                            <input type="hidden" name="id" value="${order.id}"/>
+                                            <button type="submit" class="btn btn-outline-primary" style="margin: 2px"><fmt:message key="library.orders.list.view"/></button>
+                                        </form>
+                                    </td>
                                 </tr>
                             </c:when>
                             <c:when test="${order.status == 'REJECTED'}">
@@ -98,6 +173,12 @@
                                 <td>
                                     <fmt:message key="profile.order.info.status.reject"/>
                                 </td>
+                                    <td class="d-flex justify-content-end">
+                                        <form method="post" action="${pageContext.request.contextPath}/library/profile">
+                                            <input type="hidden" name="id" value="${order.id}"/>
+                                            <button type="submit" class="btn btn-outline-primary" style="margin: 2px"><fmt:message key="library.orders.list.view"/></button>
+                                        </form>
+                                    </td>
                                 </tr>
                             </c:when>
                             <c:when test="${order.status == 'ON_USE'}">
@@ -107,7 +188,14 @@
                                 <td>
                                     <fmt:message key="profile.order.info.status.on.use"/>
                                 </td>
+                                    <td class="d-flex justify-content-end">
+                                        <form method="post" action="${pageContext.request.contextPath}/library/profile">
+                                            <input type="hidden" name="id" value="${order.id}"/>
+                                            <button type="submit" class="btn btn-outline-primary" style="margin: 2px"><fmt:message key="library.orders.list.view"/></button>
+                                        </form>
+                                    </td>
                                 </tr>
+
                             </c:when>
                             <c:when test="${order.status == 'EXPIRED'}">
                                 <tr class="table-danger">
@@ -116,7 +204,18 @@
                                 <td>
                                     <fmt:message key="profile.order.info.status.expired"/>
                                 </td>
+                                    <td class="d-flex justify-content-end">
+                                        <form method="post" action="${pageContext.request.contextPath}/library/payFine">
+                                            <input type="hidden" name="id" value="${order.id}"/>
+                                            <button type="submit" class="btn btn-outline-primary" style="margin: 2px"><fmt:message key="pay.fine"/></button>
+                                        </form>
+                                        <form method="post" action="${pageContext.request.contextPath}/library/profile">
+                                            <input type="hidden" name="id" value="${order.id}"/>
+                                            <button type="submit" class="btn btn-outline-primary" style="margin: 2px"><fmt:message key="library.orders.list.view"/></button>
+                                        </form>
+                                    </td>
                                 </tr>
+
                             </c:when>
                             <c:when test="${order.status == 'CLOSED'}">
                                 <tr class="table-active">
@@ -125,6 +224,28 @@
                                 <td>
                                     <fmt:message key="profile.order.info.status.closed"/>
                                 </td>
+                                    <td class="d-flex justify-content-end">
+                                        <form method="post" action="${pageContext.request.contextPath}/library/profile">
+                                            <input type="hidden" name="id" value="${order.id}"/>
+                                            <button type="submit" class="btn btn-outline-primary" style="margin: 2px"><fmt:message key="library.orders.list.view"/></button>
+                                        </form>
+                                    </td>
+                                </tr>
+
+                            </c:when>
+                            <c:when test="${order.status == 'PAID'}">
+                                <tr class="table-primary">
+                                    <th scope="row">${order.id}</th>
+                                    <td>${order.term}</td>
+                                    <td>
+                                        <fmt:message key="pay.paid"/>
+                                    </td>
+                                    <td class="d-flex justify-content-end">
+                                        <form method="post" action="${pageContext.request.contextPath}/library/profile">
+                                            <input type="hidden" name="id" value="${order.id}"/>
+                                            <button type="submit" class="btn btn-outline-primary" style="margin: 2px"><fmt:message key="library.orders.list.view"/></button>
+                                        </form>
+                                    </td>
                                 </tr>
 
                             </c:when>
@@ -142,5 +263,10 @@
     </div>
 </div>
 <%@ include file="WEB-INF/jspf/footer.jspf"%>
+<script>
+    $(document).ready(function(){
+        $("#orderInfo").modal('show');
+    });
+</script>
 </body>
 </html>

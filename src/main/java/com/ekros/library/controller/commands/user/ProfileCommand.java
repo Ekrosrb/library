@@ -25,10 +25,15 @@ public class ProfileCommand implements ICommand {
     public String execute(HttpServletRequest request) throws Exception {
         HttpSession session = request.getSession();
         AuthUser authUser = (AuthUser) session.getAttribute("auth");
+        String id = request.getParameter("id");
         String from = request.getParameter("from");
 
         if(from == null || from.isEmpty()){
             from = "0";
+        }
+
+        if(CommandUtils.validateId(id)){
+            request.setAttribute("order", orderService.getOrderInfo(Integer.parseInt(id)));
         }
 
         User user = userService.getUserById(authUser.getUserId());

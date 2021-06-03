@@ -28,6 +28,8 @@ public class OrderRepo implements IOrderRepo {
     private static final String SQL_SELECT_ORDER_INFO = "SELECT orders.id, books.name, users.first_name, users.email, users.phone, orders.term, orders.order_date, orders.fine, orders.status FROM orders, books, users WHERE orders.user_id = users.id AND orders.book_id = books.id AND orders.id = ?";
     private static final String SQL_USER_ORDERS_COUNT = "SELECT COUNT(*) FROM orders WHERE user_id = ?";
     private static final String SQL_UPDATE_STATUS = "UPDATE orders, books SET orders.status = ?, books.count = books.count + ? WHERE orders.book_id = books.id AND orders.id = ?";
+    public static final String SQL_PAY_FINE = "UPDATE orders SET fine = 0, status = 6 WHERE id = ?";
+    public static final String SQL_ADD_FINE = "UPDATE orders SET fine = ?, status = 3 WHERE id = ?";
 
     private static OrderRepo orderRepo;
 
@@ -151,6 +153,25 @@ public class OrderRepo implements IOrderRepo {
             statement.setInt(1, status.ordinal());
             statement.setInt(2, bookValue);
             statement.setInt(3, id);
+            statement.executeUpdate();
+        }
+    }
+
+    @Override
+    public void payFine(int id) throws SQLException {
+        try(Connection conn = DBCPDataSource.getConnection();
+            PreparedStatement statement = conn.prepareStatement(SQL_PAY_FINE)){
+            statement.setInt(1, id);
+            statement.executeUpdate();
+        }
+    }
+
+    @Override
+    public void addFine(int id, int fine) throws SQLException {
+        try(Connection conn = DBCPDataSource.getConnection();
+            PreparedStatement statement = conn.prepareStatement(SQL_ADD_FINE)){
+            statement.setInt(1, fine);
+            statement.setInt(2, id);
             statement.executeUpdate();
         }
     }

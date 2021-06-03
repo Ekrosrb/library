@@ -123,6 +123,7 @@
         <filter-name>LibrarianFilter</filter-name>
         <url-pattern>/library/librarian</url-pattern>
         <url-pattern>/library/changeStatus</url-pattern>
+        <url-pattern>/library/addFine</url-pattern>
     </filter-mapping>
 
     <filter>
@@ -136,6 +137,7 @@
         <url-pattern>/library/profile</url-pattern>
         <url-pattern>/library/updateUser</url-pattern>
         <url-pattern>/library/orderBook</url-pattern>
+        <url-pattern>/library/payFine</url-pattern>
     </filter-mapping>
 
     <listener>

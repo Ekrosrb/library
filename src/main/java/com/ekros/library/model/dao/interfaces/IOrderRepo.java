@@ -17,8 +17,8 @@ public interface IOrderRepo extends IRepo<Order>{
     int getCount() throws SQLException;
     int getUserOrdersCount(int id) throws SQLException;
     void updateStatus(int id, Status status, int bookValue) throws SQLException;
-//    void acceptOrder(int id) throws SQLException;
-//    void closeOrder(int id) throws SQLException;
+    void payFine(int id) throws SQLException;
+    void addFine(int id, int fine) throws SQLException;
 
 
 

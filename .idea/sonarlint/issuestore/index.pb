@@ -3,14 +3,8 @@
 library.iml,9\d\9d5c6012933103b157c82fbf025c3222f4763ead
 `
 0src/main/webapp/WEB-INF/classes/log4j.properties,9\9\9918bd0aad69b9a33131e4fbcbc0ab9830d4b444
-X
-(src/main/webapp/WEB-INF/jspf/footer.jspf,5\1\51d41bf9f1fd7b8c54f6a1a932da96d25f0a4b05
 s
 Csrc/main/java/com/ekros/library/model/dao/interfaces/IUserRepo.java,5\7\5784605cf5dcaaf7d1ec2feb0f37f2de6dee6842
-V
-&src/main/webapp/WEB-INF/jspf/head.jspf,d\f\df7258b476d0dbc30286cde67ebfe2570870fdcd
-g
-7src/main/webapp/WEB-INF/jspf/content/editUserModal.jspf,3\0\3059f41f89cba057dad02473ec4f205fe88693b4
 o
 ?src/main/java/com/ekros/library/model/dao/interfaces/IRepo.java,d\9\d9432f1ed802377611c0b83899c502a17351a476
 c
@@ -57,10 +51,6 @@ m
 =src/main/java/com/ekros/library/controller/commands/Path.java,f\0\f022f71bcf48fd3b3b371df995ad158c468c5371
 y
 Isrc/main/java/com/ekros/library/controller/listeners/ContextListener.java,4\2\42f63eddb4c80896b4add9497259458faa0285cc
-t
-Dsrc/main/java/com/ekros/library/model/dao/interfaces/IOrderRepo.java,0\c\0cf1faf3f4c7a918765d5c2ccadcc2074fc5375b
-k
-;src/main/java/com/ekros/library/model/entity/OrderInfo.java,c\f\cf2dd1e7aa24f37a8ee43504fdc2c9e8a1717dcd
 g
 7src/main/java/com/ekros/library/model/entity/Order.java,2\b\2ba161a36d76eceb6d77d63f0e58e182d7c3dab8
 f
@@ -69,8 +59,6 @@ p
 @src/main/java/com/ekros/library/model/dao/mapper/BookMapper.java,9\a\9a9642e8338244635b33afb46967b92e6647b012
 
 Osrc/main/java/com/ekros/library/controller/commands/user/UpdateUserCommand.java,7\b\7b266d8e51f8174b3da1ba0da0f93829eb612674
-}
-Msrc/main/java/com/ekros/library/controller/commands/user/AddOrderCommand.java,5\b\5b7e2e10c611a3187c8fd0c90a37962c8196d90a
 {
 Ksrc/main/java/com/ekros/library/controller/commands/user/LogoutCommand.java,0\f\0fe2bab728efc87b530fce3f7a5c80f91c043bd9
 p
@@ -81,21 +69,9 @@ r
 Bsrc/main/java/com/ekros/library/controller/filters/MainFilter.java,c\9\c95ab6ef0dd4adaa5bf4be044e4632fcebbabc4f
 u
 Esrc/main/java/com/ekros/library/model/dao/mapper/OrderInfoMapper.java,7\f\7f4108dc28c5812186ee962d702e587aaf7423cc
-u
-Esrc/main/java/com/ekros/library/controller/commands/CommandUtils.java,9\d\9d067cfee3f88770fd2d1182fbeee861c16a25c2
 n
 >src/main/java/com/ekros/library/model/service/UserService.java,3\1\315e539118267e781f770c28c99dce168346774e
-O
-src/main/webapp/WEB-INF/web.xml,2\e\2e22b6edd746fa3dc40ad7276c87c8d87d72a392
 m
 =src/main/webapp/WEB-INF/jspf/content/librarianPagination.jspf,2\c\2cbdef0a1b7d98ecc73c3b95b13df61f43fcc646
-|
-Lsrc/main/java/com/ekros/library/controller/commands/user/ProfileCommand.java,8\3\8338046a41415959c79aeebbe2f0da99f089ed5c
-S
-#src/main/webapp/admin/adminPage.jsp,7\c\7ce0f8bfacb4635d7b6c8e890dae8036bf182608
 {
 Ksrc/main/java/com/ekros/library/controller/commands/admin/AdminCommand.java,b\f\bf3c917598fbe02857037c60b139c3d220a10719
-m
-=src/main/java/com/ekros/library/model/dao/impl/OrderRepo.java,6\e\6e2f94885227b0e2550e8cdaba24325229f0d938
-o
-?src/main/java/com/ekros/library/model/service/OrderService.java,1\a\1ab3297121405595e636e00bc50f46793bb583f2

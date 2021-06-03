@@ -9,7 +9,9 @@ com\ekros\library\model\dao\impl\OrderRepo.class
 com\ekros\library\controller\commands\admin\DeleteBookCommand.class
 com\ekros\library\model\entity\Order.class
 com\ekros\library\controller\commands\guest\SearchBookCommand.class
+com\ekros\library\controller\commands\librarian\AddFineCommand.class
 com\ekros\library\model\dao\mapper\OrderInfoMapper.class
+com\ekros\library\controller\commands\user\PayFineCommand.class
 com\ekros\library\controller\commands\CommandUtils.class
 com\ekros\library\controller\commands\user\UpdateUserCommand.class
 com\ekros\library\model\entity\Status.class

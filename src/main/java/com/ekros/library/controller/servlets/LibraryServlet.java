@@ -2,16 +2,14 @@ package com.ekros.library.controller.servlets;
 
 import com.ekros.library.controller.commands.*;
 import com.ekros.library.controller.commands.admin.*;
+import com.ekros.library.controller.commands.librarian.AddFineCommand;
 import com.ekros.library.controller.commands.librarian.ChangeStatusCommand;
-import com.ekros.library.controller.commands.user.UpdateUserCommand;
+import com.ekros.library.controller.commands.user.*;
 import com.ekros.library.controller.commands.guest.LocaleCommand;
 import com.ekros.library.controller.commands.guest.LoginCommand;
 import com.ekros.library.controller.commands.guest.SearchBookCommand;
 import com.ekros.library.controller.commands.guest.SiginCommand;
 import com.ekros.library.controller.commands.librarian.LibrarianCommand;
-import com.ekros.library.controller.commands.user.AddOrderCommand;
-import com.ekros.library.controller.commands.user.LogoutCommand;
-import com.ekros.library.controller.commands.user.ProfileCommand;
 import com.ekros.library.model.service.BookService;
 import com.ekros.library.model.service.OrderService;
 import com.ekros.library.model.service.UserService;
@@ -51,6 +49,8 @@ public class LibraryServlet extends HttpServlet {
         commands.put("orderBook", new AddOrderCommand(orderService));
         commands.put("librarian", new LibrarianCommand(orderService));
         commands.put("changeStatus", new ChangeStatusCommand(orderService));
+        commands.put("payFine", new PayFineCommand(orderService));
+        commands.put("addFine", new AddFineCommand(orderService));
     }
 
     @Override

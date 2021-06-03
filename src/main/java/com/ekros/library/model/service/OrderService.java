@@ -68,7 +68,12 @@ public class OrderService {
         return subRepo.getStatusCount(status);
     }
 
+    public void payFine(int id) throws SQLException {
+        subRepo.payFine(id);
+    }
 
 
-
+    public void addFine(int id, int fine) throws SQLException {
+        subRepo.addFine(id, fine);
+    }
 }
