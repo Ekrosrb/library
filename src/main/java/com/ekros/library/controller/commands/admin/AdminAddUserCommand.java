@@ -27,8 +27,11 @@ public class AdminAddUserCommand implements ICommand {
         try {
             userService.addUser(reqUser);
         }catch (SQLException e) {
-            request.setAttribute("message", "Something was wrong :(");
+            CommandUtils.setMessage(request, "Something was wrong :(");
+            return Path.LIBRARY_ADMIN;
         }
-        return Path.LIBRARY_ADMIN;
+
+        return Path.REDIRECT_ADMIN_PAGE;
+
     }
 }

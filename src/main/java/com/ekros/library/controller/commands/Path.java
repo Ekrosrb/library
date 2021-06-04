@@ -17,6 +17,8 @@ public class Path {
 
     public static final String REDIRECT_MAIN_PAGE = REDIRECT + MAIN_PAGE;
     public static final String REDIRECT_PROFILE = REDIRECT + LIBRARY_PROFILE;
+    public static final String REDIRECT_LIBRARIAN_PAGE = REDIRECT + LIBRARY_LIBRARIAN;
+    public static final String REDIRECT_ADMIN_PAGE = REDIRECT + LIBRARY_ADMIN;
 
 
 }

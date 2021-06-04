@@ -54,9 +54,12 @@
                 <form class="form-inline" method="post" action="${pageContext.request.contextPath}/library/books">
                     <input name="from" type="hidden" value="0">
                     <input name="orderBy" type="hidden"  value="${requestScope.orderBy}"/>
-                    <input class="form-control mr-sm-2" type="search" placeholder="<fmt:message key="nav.search"/>" aria-label="Search" name="bookName" value="${requestScope.bookName}"/>
+                    <input class="form-control mr-sm-2" type="search" placeholder="<fmt:message key="nav.search.hide.text"/>" aria-label="<fmt:message key="nav.search.hide.text"/>" name="bookName" value="${requestScope.bookName}"/>
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><fmt:message key="nav.search"/></button>
                 </form>
+                <c:if test="${sessionScope.auth.role == 'ADMIN'}">
+                    <%@ include file="/WEB-INF/jspf/content/addBookModal.jspf" %>
+                </c:if>
             </div>
             <div class="nav-item">
                 <%@ include file="WEB-INF/jspf/content/navRoleButtons.jspf"%>
@@ -87,13 +90,18 @@
                 </c:if>
             </p>
             <div class="card-footer text-muted">
-                ${book.edition}
+
+            </div>
+            <div class="card-footer text-muted">
+                <p>${book.author}</p>
+                <p>${book.edition}</p>
             </div>
             <nav>
+                
                 <c:if test="${not empty sessionScope.auth}">
                     <c:choose>
                         <c:when test="${book.count > 0}">
-                        <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#${book.id}orderModal"><fmt:message key="book.card.button"/></button>
+                        <button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#${book.id}orderModal"><fmt:message key="book.card.button"/></button>
                         <div class="modal fade" id="${book.id}orderModal" tabindex="-1" aria-labelledby="${book.id}orderModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -127,7 +135,7 @@
                     </c:choose>
                 </c:if>
                 <c:if test="${sessionScope.auth.role == 'ADMIN'}">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#${book.id}editBookModal" style="margin: 3px">
+                    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#${book.id}editBookModal" style="margin: 3px">
                         <fmt:message key="book.card.admin.edit"/>
                     </button>
                     <!-- Modal -->
@@ -177,7 +185,7 @@
                             </div>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#${book.id}deleteModal" style="margin: 3px"><fmt:message key="admin.pane.delete"/></button>
+                    <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#${book.id}deleteModal" style="margin: 3px"><fmt:message key="admin.pane.delete"/></button>
                     <div class="modal fade" id="${book.id}deleteModal" tabindex="-1" aria-labelledby="${book.id}deleteModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">

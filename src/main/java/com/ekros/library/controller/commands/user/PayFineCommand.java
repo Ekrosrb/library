@@ -26,7 +26,6 @@ public class PayFineCommand implements ICommand {
         }
 
         orderService.payFine(Integer.parseInt(id));
-
-        return Path.LIBRARY_PROFILE;
+        return Path.REDIRECT_PROFILE;
     }
 }

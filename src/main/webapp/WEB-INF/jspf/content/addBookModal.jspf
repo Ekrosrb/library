@@ -1,0 +1,49 @@
+<%@ include file="/WEB-INF/jspf/taglib.jspf" %>
+<button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#addBookModal" style="margin-left: 25px">
+    <fmt:message key="admin.pane.add.book"/>
+</button>
+
+<div class="modal fade" id="addBookModal" tabindex="-1" aria-labelledby="addBookModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addBookModalLabel"><fmt:message key="admin.pane.add.book"/></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" action="${pageContext.request.contextPath}/library/addBook">
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="nameAddModal" class="form-label text-dark"><fmt:message key="modal.book.name"/></label>
+                    <input class="form-control border border-dark rounded" type="text" id="nameAddModal" name = "name"/>
+                </div>
+                <div class="mb-3">
+                    <label for="authorAddModal" class="form-label text-dark"><fmt:message key="modal.book.author"/></label>
+                    <input class="form-control border border-dark rounded" type="text" id="authorAddModal" name = "author"/>
+                </div>
+                <div class="mb-3">
+                    <label for="editionAddModal" class="form-label text-dark"><fmt:message key="modal.book.edition"/></label>
+                    <input class="form-control border border-dark rounded" type="text" id="editionAddModal" name = "edition"/>
+                </div>
+                <div class="mb-3">
+                    <label for="descriptionAddModal" class="form-label text-dark"><fmt:message key="modal.book.description.en"/></label>
+                    <textarea class="form-control border border-dark rounded" type="text" id="descriptionAddModal" name = "description"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="descriptionRuAddModal" class="form-label text-dark"><fmt:message key="modal.book.description.ru"/></label>
+                    <textarea class="form-control border border-dark rounded" type="text" id="descriptionRuAddModal" name = "descriptionRu"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="countAddModal" class="form-label text-dark"><fmt:message key="modal.book.count"/></label>
+                    <input class="form-control border border-dark rounded" type="text" id="countAddModal" name = "count"/>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="modal.add.user.discard"/></button>
+                <button type="submit" class="btn btn-primary"><fmt:message key="admin.pane.add.book"/></button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>

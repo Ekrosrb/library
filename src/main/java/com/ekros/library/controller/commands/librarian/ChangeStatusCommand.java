@@ -7,6 +7,8 @@ import com.ekros.library.model.entity.Status;
 import com.ekros.library.model.service.OrderService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ChangeStatusCommand implements ICommand {
 
@@ -28,8 +30,9 @@ public class ChangeStatusCommand implements ICommand {
 
         orderService.updateStatus(Integer.parseInt(id), Status.valueOf(status));
 
-        request.setAttribute("id", id);
-        request.setAttribute("type", request.getParameter("type"));
-        return Path.LIBRARY_LIBRARIAN;
+        Map<String, String> param = new HashMap<>();
+        param.put("id", id);
+        param.put("type", request.getParameter("type"));
+        return CommandUtils.addParamsToUrl(Path.REDIRECT_LIBRARIAN_PAGE, param);
     }
 }

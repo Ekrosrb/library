@@ -30,7 +30,7 @@ public class AddOrderCommand implements ICommand {
         }
 
         Order sub = new Order(Integer.parseInt(userId), Integer.parseInt(bookId), term, null, 0L, Status.PENDING);
-        orderService.addSub(sub);
+        orderService.addOrder(sub);
         return Path.REDIRECT_PROFILE;
     }
 }

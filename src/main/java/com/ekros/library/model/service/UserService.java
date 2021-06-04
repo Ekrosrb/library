@@ -15,16 +15,16 @@ public class UserService {
         this.userRepo = UserRepo.getInstance();
     }
 
-    public void addUser(User user) throws SQLException {
-        userRepo.insert(user);
+    public User addUser(User user) throws SQLException {
+        return userRepo.insert(user);
     }
 
-    public void deleteUser(int id) throws SQLException{
-        userRepo.delete(id);
+    public int deleteUser(int id) throws SQLException{
+        return userRepo.delete(id);
     }
 
-    public void updateUser(User user) throws SQLException{
-        userRepo.update(user);
+    public User updateUser(User user) throws SQLException{
+        return userRepo.update(user);
     }
 
     public User getUserById(int id) throws SQLException{

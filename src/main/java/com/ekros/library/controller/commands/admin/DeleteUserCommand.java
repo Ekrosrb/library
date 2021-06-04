@@ -23,6 +23,6 @@ public class DeleteUserCommand implements ICommand {
             return Path.ERROR_PAGE;
         }
         userService.deleteUser(Integer.parseInt(id));
-        return Path.ADMIN_PAGE;
+        return Path.REDIRECT_ADMIN_PAGE;
     }
 }

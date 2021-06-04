@@ -31,7 +31,7 @@ public class UserRepo implements IUserRepo {
     }
 
     @Override
-    public void insert(User user) throws SQLException{
+    public User insert(User user) throws SQLException{
 
         try(Connection conn = DBCPDataSource.getConnection();
             PreparedStatement statement = conn.prepareStatement(SQL_ADD_USER, Statement.RETURN_GENERATED_KEYS)){
@@ -52,19 +52,21 @@ public class UserRepo implements IUserRepo {
                 }
             }
         }
+        return user;
     }
 
     @Override
-    public void delete(int id) throws SQLException{
+    public int delete(int id) throws SQLException{
         try(Connection conn = DBCPDataSource.getConnection();
             PreparedStatement statement = conn.prepareStatement(SQL_DELETE_USER)){
             statement.setInt(1, id);
             statement.executeUpdate();
         }
+        return id;
     }
 
     @Override
-    public void update(User user) throws SQLException{
+    public User update(User user) throws SQLException{
         try(Connection conn = DBCPDataSource.getConnection();
             PreparedStatement statement = conn.prepareStatement(SQL_UPDATE_USER)){
             statement.setString(1, user.getFirstName());
@@ -78,6 +80,7 @@ public class UserRepo implements IUserRepo {
 
             statement.executeUpdate();
         }
+        return user;
     }
 
     @Override

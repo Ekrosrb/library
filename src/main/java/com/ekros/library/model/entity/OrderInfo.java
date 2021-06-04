@@ -3,8 +3,13 @@ package com.ekros.library.model.entity;
 import java.io.Serializable;
 import java.sql.Date;
 
+/**
+ * OrderInfo - entity store detail information about order.
+ * @author ekros
+ * */
 public class OrderInfo implements Serializable {
     private int id;
+    private int userId;
     private String bookName;
     private String userName;
     private String email;
@@ -17,8 +22,9 @@ public class OrderInfo implements Serializable {
     public OrderInfo() {
     }
 
-    public OrderInfo(int id, String bookName, String userName, String email, String phone, Date term, Date orderDate, long fine, Status status) {
+    public OrderInfo(int id, int userId, String bookName, String userName, String email, String phone, Date term, Date orderDate, long fine, Status status) {
         this.id = id;
+        this.userId = userId;
         this.bookName = bookName;
         this.userName = userName;
         this.email = email;
@@ -29,7 +35,8 @@ public class OrderInfo implements Serializable {
         this.status = status;
     }
 
-    public OrderInfo(String bookName, String userName, String email, String phone, Date term, Date orderDate, long fine, Status status) {
+    public OrderInfo(int userId, String bookName, String userName, String email, String phone, Date term, Date orderDate, long fine, Status status) {
+        this.userId = userId;
         this.bookName = bookName;
         this.userName = userName;
         this.email = email;
@@ -46,6 +53,14 @@ public class OrderInfo implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getBookName() {

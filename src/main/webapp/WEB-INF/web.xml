@@ -112,6 +112,7 @@
         <url-pattern>/library/adminAddUser</url-pattern>
         <url-pattern>/library/adminUpdateBook</url-pattern>
         <url-pattern>/library/deleteBook</url-pattern>
+        <url-pattern>/library/addBook</url-pattern>
     </filter-mapping>
 
     <filter>

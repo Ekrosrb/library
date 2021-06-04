@@ -25,7 +25,7 @@ public class OrderRepo implements IOrderRepo {
     private static final String SQL_COUNT = "SELECT COUNT(*) FROM orders";
     private static final String SQL_STATUS_COUNT = "SELECT COUNT(*) FROM orders WHERE status = ?";
     private static final String SQL_USER_ORDERS = "SELECT * FROM orders WHERE user_id = ? ORDER BY order_date DESC LIMIT ?, ?";
-    private static final String SQL_SELECT_ORDER_INFO = "SELECT orders.id, books.name, users.first_name, users.email, users.phone, orders.term, orders.order_date, orders.fine, orders.status FROM orders, books, users WHERE orders.user_id = users.id AND orders.book_id = books.id AND orders.id = ?";
+    private static final String SQL_SELECT_ORDER_INFO = "SELECT orders.id, orders.user_id, books.name, users.first_name, users.email, users.phone, orders.term, orders.order_date, orders.fine, orders.status FROM orders, books, users WHERE orders.user_id = users.id AND orders.book_id = books.id AND orders.id = ?";
     private static final String SQL_USER_ORDERS_COUNT = "SELECT COUNT(*) FROM orders WHERE user_id = ?";
     private static final String SQL_UPDATE_STATUS = "UPDATE orders, books SET orders.status = ?, books.count = books.count + ? WHERE orders.book_id = books.id AND orders.id = ?";
     public static final String SQL_PAY_FINE = "UPDATE orders SET fine = 0, status = 6 WHERE id = ?";
@@ -41,7 +41,7 @@ public class OrderRepo implements IOrderRepo {
     }
 
     @Override
-    public void insert(Order sub) throws SQLException {
+    public Order insert(Order sub) throws SQLException {
         try(Connection conn = DBCPDataSource.getConnection();
             PreparedStatement statement = conn.prepareStatement(SQL_INSERT_ORDER, Statement.RETURN_GENERATED_KEYS)){
             prepareUpdate(statement, sub);
@@ -54,25 +54,28 @@ public class OrderRepo implements IOrderRepo {
                 }
             }
         }
+        return sub;
     }
 
     @Override
-    public void delete(int id) throws SQLException {
+    public int delete(int id) throws SQLException {
         try(Connection conn = DBCPDataSource.getConnection();
             PreparedStatement statement = conn.prepareStatement(SQL_DELETE_ORDER)){
             statement.setInt(1, id);
             statement.executeUpdate();
         }
+        return id;
     }
 
     @Override
-    public void update(Order sub) throws SQLException {
+    public Order update(Order sub) throws SQLException {
         try(Connection conn = DBCPDataSource.getConnection();
             PreparedStatement statement = conn.prepareStatement(SQL_UPDATE_ORDER)){
             prepareUpdate(statement, sub);
             statement.setInt(6, sub.getId());
             statement.executeUpdate();
         }
+        return sub;
     }
 
     private void prepareUpdate(PreparedStatement statement, Order sub) throws SQLException{
@@ -147,7 +150,7 @@ public class OrderRepo implements IOrderRepo {
         return sub;
     }
     @Override
-    public void updateStatus(int id, Status status, int bookValue) throws SQLException {
+    public Status updateStatus(int id, Status status, int bookValue) throws SQLException {
         try(Connection conn = DBCPDataSource.getConnection();
             PreparedStatement statement = conn.prepareStatement(SQL_UPDATE_STATUS)){
             statement.setInt(1, status.ordinal());
@@ -155,25 +158,28 @@ public class OrderRepo implements IOrderRepo {
             statement.setInt(3, id);
             statement.executeUpdate();
         }
+        return status;
     }
 
     @Override
-    public void payFine(int id) throws SQLException {
+    public int payFine(int id) throws SQLException {
         try(Connection conn = DBCPDataSource.getConnection();
             PreparedStatement statement = conn.prepareStatement(SQL_PAY_FINE)){
             statement.setInt(1, id);
             statement.executeUpdate();
         }
+        return id;
     }
 
     @Override
-    public void addFine(int id, int fine) throws SQLException {
+    public int addFine(int id, int fine) throws SQLException {
         try(Connection conn = DBCPDataSource.getConnection();
             PreparedStatement statement = conn.prepareStatement(SQL_ADD_FINE)){
             statement.setInt(1, fine);
             statement.setInt(2, id);
             statement.executeUpdate();
         }
+        return fine;
     }
 
     @Override

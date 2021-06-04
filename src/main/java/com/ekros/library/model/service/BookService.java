@@ -16,16 +16,16 @@ public class BookService {
         bookRepo = BookRepo.getInstance();
     }
 
-    public void addBook(Book book) throws SQLException {
-        bookRepo.insert(book);
+    public Book addBook(Book book) throws SQLException {
+        return bookRepo.insert(book);
     }
 
-    public void updateBook(Book book) throws SQLException{
-        bookRepo.update(book);
+    public Book updateBook(Book book) throws SQLException{
+        return bookRepo.update(book);
     }
 
-    public void deleteBook(int id) throws SQLException{
-        bookRepo.delete(id);
+    public int deleteBook(int id) throws SQLException{
+        return bookRepo.delete(id);
     }
 
     public Book getBookById(int id) throws SQLException{

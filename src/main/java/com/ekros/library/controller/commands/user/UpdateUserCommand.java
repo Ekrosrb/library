@@ -1,6 +1,7 @@
 package com.ekros.library.controller.commands.user;
 
 import com.ekros.library.controller.commands.ICommand;
+import com.ekros.library.controller.commands.Path;
 import com.ekros.library.model.entity.Role;
 import com.ekros.library.model.entity.User;
 import com.ekros.library.model.service.UserService;
@@ -24,7 +25,6 @@ public class UpdateUserCommand implements ICommand {
         String phone = request.getParameter("phone");
         String role = request.getParameter("role");
         String block = request.getParameter("block");
-        String href = request.getParameter("href");
 
         if(id == null) {
             request.setAttribute("message", "Field id not found!");
@@ -51,6 +51,6 @@ public class UpdateUserCommand implements ICommand {
             user.setBlock(Boolean.parseBoolean(block));
         }
         userService.updateUser(user);
-        return href;
+        return Path.REDIRECT_ADMIN_PAGE;
     }
 }

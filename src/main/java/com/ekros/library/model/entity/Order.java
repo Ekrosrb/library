@@ -1,7 +1,11 @@
 package com.ekros.library.model.entity;
 
 import java.sql.Date;
-
+/**
+ * Order - entity of order, which users leave when they want to borrow a book.
+ * @author ekros
+ * @see Status
+ * */
 public class Order {
     private int id;
     private int userId;

@@ -13,6 +13,9 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.jstl.core.Config;
 import java.io.IOException;
 import java.sql.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class CommandUtils {
 
@@ -70,9 +73,10 @@ public class CommandUtils {
     }
 
     public static String searchBookRequest(HttpServletRequest request){
-        request.setAttribute("bookName", request.getParameter("bookName"));
-        request.setAttribute("from", request.getParameter("from"));
-        return Path.MAIN_PAGE;
+        Map<String, String> param = new HashMap<>();
+        param.put("bookName", request.getParameter("bookName"));
+        param.put("from", request.getParameter("from"));
+        return addParamsToUrl(Path.REDIRECT_MAIN_PAGE, param);
     }
 
     public static void setMessage(ServletRequest request, String message){
@@ -93,6 +97,17 @@ public class CommandUtils {
 
     public static int getPages(int size){
         return (int) Math.ceil((double) size / (double) Integer.parseInt(DBCPDataSource.prop.getProperty("page.size")));
+    }
+
+    public static String addParamsToUrl(String url, Map<String, String> params){
+        StringBuilder sb = new StringBuilder(url);
+        sb.append("?");
+        for(Map.Entry<String, String> param: params.entrySet()){
+            if(param.getValue() != null && !param.getValue().isEmpty()) {
+                sb.append(param.getKey()).append("=").append(param.getValue()).append("&");
+            }
+        }
+        return sb.toString();
     }
 
 }

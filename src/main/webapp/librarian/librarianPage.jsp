@@ -51,6 +51,7 @@
                     <input class="dropdown-item" type="submit" name="type" value="PAID"/>
                     <div class="dropdown-divider"></div>
                     <input class="dropdown-item" type="submit" name="type" value="info"/>
+                    <input class="dropdown-item" type="submit" name="type" value="user"/>
                 </div>
             </form>
     </div>
@@ -58,7 +59,7 @@
         <c:when test="${requestScope.type eq 'info'}">
             <div class="d-flex justify-content-center" style="margin-top: 15px">
                 <form class="form-inline mx-auto" method="post" action="${pageContext.request.contextPath}/library/librarian">
-                    <input type="hidden" name="type" value="info">
+                    <input type="hidden" name="type" value="${requestScope.type}">
                     <input class="form-control mr-sm-2" type="search" placeholder="<fmt:message key="nav.search"/>" aria-label="Search" name="id"/>
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><fmt:message key="nav.search"/></button>
                 </form>
@@ -67,8 +68,18 @@
             <c:when test="${not empty requestScope.order}">
                 <div class="mb-3 ">
                     <label for="userName" class="form-label text-dark"><fmt:message key="library.orders.info.user.name"/></label>
+                    <div class="d-flex justify-content-center">
                     <input class="form-control border border-dark rounded" id="userName" name = "userName" value="${requestScope.order.userName}" disabled>
+                    <div class="d-flex justify-content-center">
+                        <form class="form-inline mx-auto" method="post" action="${pageContext.request.contextPath}/library/librarian">
+                            <input type="hidden" name="type" value="user"/>
+                            <input type="hidden" name="id" value="${requestScope.order.userId}"/>
+                            <button class="btn btn-outline-primary" type="submit" id="userId" name = "id" style="margin-left: 20px"><fmt:message key="library.orders.list.view"/></button>
+                        </form>
+                    </div>
+                    </div>
                 </div>
+
                 <div class="mb-3">
                     <label for="email" class="form-label text-dark"><fmt:message key="library.orders.info.user.email"/></label>
                     <input class="form-control border border-dark rounded" type="email" id="email" name = "email" value="${requestScope.order.email}" disabled>
@@ -167,6 +178,15 @@
             </c:choose>
         </c:when>
         <c:otherwise>
+            <c:if test="${requestScope.type eq 'user'}">
+                <div class="d-flex justify-content-center" style="margin-top: 15px">
+                    <form class="form-inline mx-auto" method="post" action="${pageContext.request.contextPath}/library/librarian">
+                        <input type="hidden" name="type" value="${requestScope.type}">
+                        <input class="form-control mr-sm-2" type="search" placeholder="<fmt:message key="nav.search"/>" aria-label="Search" name="id"/>
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><fmt:message key="nav.search"/></button>
+                    </form>
+                </div>
+            </c:if>
             <%@ include file="/WEB-INF/jspf/content/librarianPagination.jspf"%>
             <div>
                 <h3><fmt:message key="library.orders.list.title"/></h3>

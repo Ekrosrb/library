@@ -27,8 +27,6 @@ public class AddFineCommand implements ICommand {
 
         orderService.addFine(Integer.parseInt(id), Integer.parseInt(fine));
 
-        request.setAttribute("type", "info");
-        request.setAttribute("order", orderService.getOrderInfo(Integer.parseInt(id)));
-        return Path.LIBRARIAN_PAGE;
+        return Path.REDIRECT_LIBRARIAN_PAGE;
     }
 }

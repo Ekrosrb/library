@@ -45,6 +45,7 @@ public class LibraryServlet extends HttpServlet {
         commands.put("deleteUser", new DeleteUserCommand(userService));
         commands.put("adminAddUser", new AdminAddUserCommand(userService));
         commands.put("adminUpdateBook", new UpdateBookCommand(bookService));
+        commands.put("addBook", new AddBookCommand(bookService));
         commands.put("deleteBook", new DeleteBookCommand(bookService));
         commands.put("orderBook", new AddOrderCommand(orderService));
         commands.put("librarian", new LibrarianCommand(orderService));

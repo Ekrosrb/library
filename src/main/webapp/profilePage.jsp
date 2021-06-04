@@ -44,20 +44,6 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="mb-3 ">
-                    <label for="1userName" class="form-label text-dark"><fmt:message key="library.orders.info.user.name"/></label>
-                    <input class="form-control border border-dark rounded" id="1userName" name = "userName" value="${requestScope.order.userName}" disabled>
-                </div>
-                <div class="mb-3">
-                    <label for="1email" class="form-label text-dark"><fmt:message key="library.orders.info.user.email"/></label>
-                    <input class="form-control border border-dark rounded" type="email" id="1email" name = "email" value="${requestScope.order.email}" disabled>
-                </div>
-
-                <div class="mb-3">
-                    <label for="1phone" class="form-label text-dark"><fmt:message key="form.phone"/></label>
-                    <input type="number" class="form-control border border-dark rounded" id="1phone" name = "phone" value="${requestScope.order.phone}" disabled>
-                </div>
-
                 <div class="mb-3">
                     <label for="1bookName" class="form-label text-dark"><fmt:message key="library.orders.info.book.name"/></label>
                     <input class="form-control border border-dark rounded" id="1bookName" name="bookName" value="${requestScope.order.bookName}" disabled>
@@ -131,6 +117,7 @@
                         <th scope="col">Term</th>
                         <th scope="col">Status</th>
                         <th scope="col">Action</th>
+
                     </tr>
                     </thead>
                     <tbody>
@@ -202,7 +189,7 @@
                                 <th scope="row">${order.id}</th>
                                 <td>${order.term}</td>
                                 <td>
-                                    <fmt:message key="profile.order.info.status.expired"/>
+                                    <fmt:message key="profile.order.info.status.expired"/>   ${order.fine}$
                                 </td>
                                     <td class="d-flex justify-content-end">
                                         <form method="post" action="${pageContext.request.contextPath}/library/payFine">

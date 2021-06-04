@@ -18,8 +18,8 @@ public class BookRepo implements IBookRepo {
     private final String SQL_DELETE_BOOK = "DELETE FROM books WHERE id = ?";
     private final String SQL_UPDATE_BOOK = "UPDATE books SET name = ?, author = ?, edition = ?, description = ?, description_ru = ?, count = ? WHERE id = ?";
     private final String SQL_SELECT_BOOK_BY_ID = "SELECT * FROM books WHERE id = ?";
-    private final String SQL_SELECT_BOOKS_BY_CONTAINS_NAME = "SELECT * FROM books WHERE name LIKE ? ORDER BY %s DESC LIMIT ?, ?";
-    private final String SQL_GET_BOOKS_COUNT = "SELECT COUNT(*) FROM books WHERE name LIKE ?";
+    private final String SQL_SELECT_BOOKS_BY_CONTAINS_NAME = "SELECT * FROM books WHERE name LIKE ? OR author LIKE ? ORDER BY %s DESC LIMIT ?, ?";
+    private final String SQL_GET_BOOKS_COUNT = "SELECT COUNT(*) FROM books WHERE name LIKE ? OR author LIKE ?";
 
     private static BookRepo bookRepo;
 
@@ -33,9 +33,9 @@ public class BookRepo implements IBookRepo {
     }
 
     @Override
-    public void insert(Book book) throws SQLException {
+    public Book insert(Book book) throws SQLException {
         try(Connection conn = DBCPDataSource.getConnection();
-            PreparedStatement statement = conn.prepareStatement(SQL_INSERT_BOOK)) {
+            PreparedStatement statement = conn.prepareStatement(SQL_INSERT_BOOK, Statement.RETURN_GENERATED_KEYS)) {
             prepareUpdate(statement, book);
             statement.executeUpdate();
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
@@ -46,25 +46,28 @@ public class BookRepo implements IBookRepo {
                 }
             }
         }
+        return book;
     }
 
     @Override
-    public void delete(int id) throws SQLException {
+    public int delete(int id) throws SQLException {
         try(Connection conn = DBCPDataSource.getConnection();
             PreparedStatement statement = conn.prepareStatement(SQL_DELETE_BOOK)){
             statement.setInt(1, id);
             statement.executeUpdate();
         }
+        return id;
     }
 
     @Override
-    public void update(Book book) throws SQLException {
+    public Book update(Book book) throws SQLException {
         try(Connection conn = DBCPDataSource.getConnection();
             PreparedStatement statement = conn.prepareStatement(SQL_UPDATE_BOOK)) {
             prepareUpdate(statement, book);
             statement.setInt(7, book.getId());
             statement.executeUpdate();
         }
+        return book;
     }
 
     @Override
@@ -91,8 +94,9 @@ public class BookRepo implements IBookRepo {
                     conn.prepareStatement(String.format(SQL_SELECT_BOOKS_BY_CONTAINS_NAME, orderBy))) {
 
             statement.setString(1, name);
-            statement.setInt(2, from);
-            statement.setInt(3, to);
+            statement.setString(2, name);
+            statement.setInt(3, from);
+            statement.setInt(4, to);
             ResultSet res = statement.executeQuery();
             while (res.next()){
                 books.add(mapper.getFromResultSet(res));
@@ -106,6 +110,7 @@ public class BookRepo implements IBookRepo {
         try(Connection conn = DBCPDataSource.getConnection();
             PreparedStatement statement = conn.prepareStatement(SQL_GET_BOOKS_COUNT)){
             statement.setString(1, name);
+            statement.setString(2, name);
             ResultSet res = statement.executeQuery();
             int count = 0;
             if(res.next()) {

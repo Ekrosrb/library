@@ -1,7 +1,10 @@
 package com.ekros.library.model.entity;
 
 import java.sql.Date;
-
+/**
+ * User - the entity of the registered user.
+ * Contains all information entered by the user upon successful registration.
+ * */
 public class User {
     private int id;
     private String firstName;

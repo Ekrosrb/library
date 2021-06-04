@@ -7,6 +7,7 @@ C:\Users\ekros\IdeaProjects\Java EE Project\JavaEEProject\Library\library\src\ma
 C:\Users\ekros\IdeaProjects\Java EE Project\JavaEEProject\Library\library\src\main\java\com\ekros\library\model\entity\OrderInfo.java
 C:\Users\ekros\IdeaProjects\Java EE Project\JavaEEProject\Library\library\src\main\java\com\ekros\library\controller\commands\admin\DeleteUserCommand.java
 C:\Users\ekros\IdeaProjects\Java EE Project\JavaEEProject\Library\library\src\main\java\com\ekros\library\controller\filters\AdminFilter.java
+C:\Users\ekros\IdeaProjects\Java EE Project\JavaEEProject\Library\library\src\main\java\com\ekros\library\controller\commands\admin\AddBookCommand.java
 C:\Users\ekros\IdeaProjects\Java EE Project\JavaEEProject\Library\library\src\main\java\com\ekros\library\controller\commands\user\LogoutCommand.java
 C:\Users\ekros\IdeaProjects\Java EE Project\JavaEEProject\Library\library\src\main\java\com\ekros\library\controller\filters\MainFilter.java
 C:\Users\ekros\IdeaProjects\Java EE Project\JavaEEProject\Library\library\src\main\java\com\ekros\library\controller\commands\guest\SiginCommand.java

@@ -1,7 +1,12 @@
 package com.ekros.library.model.entity;
 
 import java.io.Serializable;
-
+/**
+ * AuthUser - the essence of the authorized user, used for transmission in the session
+ * @author ekros
+ * @see Role
+ * @see User
+ * */
 public class AuthUser implements Serializable {
     int userId;
     Role role;

@@ -49,6 +49,6 @@ public class SiginCommand implements ICommand {
             return Path.ERROR_PAGE;
         }
         log.info("Successful sigin!");
-        return CommandUtils.searchBookRequest(request);
+        return Path.REDIRECT_MAIN_PAGE;
     }
 }

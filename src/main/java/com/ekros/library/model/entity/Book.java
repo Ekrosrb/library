@@ -1,5 +1,8 @@
 package com.ekros.library.model.entity;
-
+/**
+ * Book - entity of the book, for storing information with which the user can interact.
+ * @author ekros
+ * */
 public class Book {
     private int id;
     private String name;
@@ -10,6 +13,15 @@ public class Book {
     private int count;
 
     public Book() {
+    }
+
+    public Book(String name, String author, String edition, String description, String descriptionRu, int count) {
+        this.name = name;
+        this.author = author;
+        this.edition = edition;
+        this.description = description;
+        this.descriptionRu = descriptionRu;
+        this.count = count;
     }
 
     public Book(int id, String name, String author, String edition, String description, String descriptionRu, int count) {
