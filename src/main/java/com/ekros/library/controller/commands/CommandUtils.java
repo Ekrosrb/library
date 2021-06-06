@@ -10,12 +10,10 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.servlet.jsp.jstl.core.Config;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class CommandUtils {
 
@@ -30,11 +28,6 @@ public class CommandUtils {
         if(authUser != null){
             return false;
         }
-        String locale = (String) session.getAttribute("locale");
-        if(locale == null){
-            locale = "en";
-        }
-        Config.set(session, "javax.servlet.jsp.jstl.fmt.locale", locale);
         authUser = new AuthUser(user.getId(), user.getRole());
         session.setAttribute("auth", authUser);
 
