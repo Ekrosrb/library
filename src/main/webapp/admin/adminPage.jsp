@@ -45,7 +45,7 @@
 
     <div class="d-flex justify-content-start" style="margin-top: 15px">
         <form class="form-inline mx-auto" method="post" action="${pageContext.request.contextPath}/library/admin">
-            <input class="form-control mr-sm-2" type="search" placeholder="<fmt:message key="nav.search"/>" aria-label="Search" name="id"/>
+            <input class="form-control mr-sm-2" type="search" placeholder="<fmt:message key="nav.search.admin.hide.text"/>" aria-label="Search" name="id"/>
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><fmt:message key="nav.search"/></button>
         </form>
     </div>

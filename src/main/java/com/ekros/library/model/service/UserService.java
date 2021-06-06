@@ -6,6 +6,8 @@ import com.ekros.library.model.dao.interfaces.IUserRepo;
 import com.ekros.library.model.entity.User;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class UserService {
@@ -37,6 +39,14 @@ public class UserService {
 
     public List<User> getUsersPage(int from) throws SQLException {
         return userRepo.getUsersPage(from, from+page);
+    }
+
+    public List<User> getSingleUserPage(int id) throws SQLException {
+        User user = userRepo.getUserById(id);
+        if(user != null) {
+            return Collections.singletonList(userRepo.getUserById(id));
+        }
+        return new ArrayList<>();
     }
 
     public int getCount() throws SQLException{

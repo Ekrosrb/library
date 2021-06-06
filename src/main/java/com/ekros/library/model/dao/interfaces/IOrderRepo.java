@@ -104,7 +104,4 @@ public interface IOrderRepo extends IRepo<Order>{
      * @throws SQLException for invalid data or connection error
      * */
     int addFine(int id, int fine) throws SQLException;
-
-
-
 }
