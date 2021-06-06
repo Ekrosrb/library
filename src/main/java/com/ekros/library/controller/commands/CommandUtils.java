@@ -17,6 +17,8 @@ import java.util.Map;
 
 public class CommandUtils {
 
+    private CommandUtils(){}
+
     public static boolean validate(String email, String password){
         return !(email == null || password == null || email.isEmpty() || password.isEmpty());
     }

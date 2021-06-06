@@ -55,19 +55,19 @@ public class LibraryServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         log.info("--------GET--------");
         handler(req, resp);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         log.info("--------POST--------");
         handler(req, resp);
     }
 
 
-    private void handler(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+    private void handler(HttpServletRequest req, HttpServletResponse resp) throws IOException{
         try {
             String path = req.getRequestURI();
             path = path.replaceAll(".*/library/", "");

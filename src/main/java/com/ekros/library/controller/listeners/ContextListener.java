@@ -23,13 +23,12 @@ public class ContextListener implements ServletContextListener {
 
 
     private void initLog4J(ServletContext servletContext) {
-        log.info("Log4J init...");
+        log.info("Log4J start init.");
         try {
             PropertyConfigurator.configure(servletContext.getRealPath("WEB-INF/classes/log4j.properties"));
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
         log.info("Log4J init complete.");
     }
 }
