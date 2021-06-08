@@ -1,6 +1,8 @@
 package com.ekros.library.model.entity;
 
 import java.sql.Date;
+import java.util.Objects;
+
 /**
  * User - the entity of the registered user.
  * Contains all information entered by the user upon successful registration.
@@ -112,5 +114,18 @@ public class User {
 
     public void setBlock(boolean block) {
         this.block = block;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return block == user.block && firstName.equals(user.firstName) && lastName.equals(user.lastName) && email.equals(user.email) && password.equals(user.password) && birthday.equals(user.birthday) && phone.equals(user.phone) && role == user.role;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName, email, password, birthday, phone, role, block);
     }
 }

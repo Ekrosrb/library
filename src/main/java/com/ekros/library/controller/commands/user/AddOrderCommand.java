@@ -28,7 +28,7 @@ public class AddOrderCommand implements ICommand {
         String bookId = request.getParameter("bookId");
         Date term = Date.valueOf(request.getParameter("term"));
 
-        if(userId == null || bookId == null || userId.isEmpty() || bookId.isEmpty() || term == null){
+        if(userId == null || bookId == null || userId.isEmpty() || bookId.isEmpty()){
             CommandUtils.setMessage(request, "Wrong request!");
             return Path.ERROR_PAGE;
         }

@@ -26,9 +26,9 @@ public class UpdateUserCommand implements ICommand {
         String role = request.getParameter("role");
         String block = request.getParameter("block");
 
-        if(id == null) {
+        if(id == null || id.isEmpty()) {
             request.setAttribute("message", "Field id not found!");
-            return "/error";
+            return Path.ERROR_PAGE;
         }
         User user = userService.getUserById(Integer.parseInt(id));
 

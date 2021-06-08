@@ -1,6 +1,8 @@
 package com.ekros.library.model.entity;
 
 import java.sql.Date;
+import java.util.Objects;
+
 /**
  * Order - entity of order, which users leave when they want to borrow a book.
  * @author ekros
@@ -91,5 +93,18 @@ public class Order {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return userId == order.userId && bookId == order.bookId && fine == order.fine && term.equals(order.term) && orderDate.equals(order.orderDate) && status == order.status;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId, bookId, term, orderDate, fine, status);
     }
 }

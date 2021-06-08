@@ -1,4 +1,7 @@
 package com.ekros.library.model.entity;
+
+import java.util.Objects;
+
 /**
  * Book - entity of the book, for storing information with which the user can interact.
  * @author ekros
@@ -88,5 +91,20 @@ public class Book {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return count == book.count && name.equals(book.name) && author.equals(book.author) &&
+                edition.equals(book.edition) && description.equals(book.description) &&
+                descriptionRu.equals(book.descriptionRu);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, author, edition, description, descriptionRu, count);
     }
 }

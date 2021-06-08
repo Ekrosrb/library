@@ -2,6 +2,7 @@ package com.ekros.library.model.entity;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.Objects;
 
 /**
  * OrderInfo - entity store detail information about order.
@@ -125,5 +126,18 @@ public class OrderInfo implements Serializable {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrderInfo orderInfo = (OrderInfo) o;
+        return userId == orderInfo.userId && fine == orderInfo.fine && bookName.equals(orderInfo.bookName) && userName.equals(orderInfo.userName) && email.equals(orderInfo.email) && phone.equals(orderInfo.phone) && term.equals(orderInfo.term) && orderDate.equals(orderInfo.orderDate) && status == orderInfo.status;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId, bookName, userName, email, phone, term, orderDate, fine, status);
     }
 }

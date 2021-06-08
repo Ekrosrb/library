@@ -44,7 +44,7 @@ public class UserService {
     public List<User> getSingleUserPage(int id) throws SQLException {
         User user = userRepo.getUserById(id);
         if(user != null) {
-            return Collections.singletonList(userRepo.getUserById(id));
+            return Collections.singletonList(user);
         }
         return new ArrayList<>();
     }

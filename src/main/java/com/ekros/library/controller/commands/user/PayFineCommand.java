@@ -23,6 +23,7 @@ public class PayFineCommand implements ICommand {
 
         if(!CommandUtils.validateId(id)){
             CommandUtils.setMessage(request, "Incorrect id value!");
+            return Path.ERROR_PAGE;
         }
 
         orderService.payFine(Integer.parseInt(id));

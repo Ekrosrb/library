@@ -92,7 +92,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <Collation>utf8mb4_0900_ai_ci</Collation>
     </schema>
     <schema id="5" parent="1" name="lucky">
-      <Collation>utf8mb4_0900_ai_ci</Collation>
+      <Collation>utf8_general_ci</Collation>
     </schema>
     <schema id="6" parent="1" name="mysql">
       <Collation>utf8mb4_0900_ai_ci</Collation>

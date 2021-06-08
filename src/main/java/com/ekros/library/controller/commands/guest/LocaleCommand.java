@@ -15,7 +15,7 @@ public class LocaleCommand implements ICommand {
 
         String locale = request.getParameter("locale");
         HttpSession session = request.getSession();
-        if(locale == null){
+        if(locale == null || locale.isEmpty()){
            CommandUtils.setMessage(request, "Incorrect locale name!");
             return Path.ERROR_PAGE;
         }
