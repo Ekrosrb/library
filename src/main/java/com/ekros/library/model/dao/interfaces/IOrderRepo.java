@@ -22,6 +22,14 @@ public interface IOrderRepo extends IRepo<Order>{
      * */
     Order getOrder(int id) throws SQLException;
     /**
+     * Get record about order with transferred userId and bookId
+     * @param userId - user_id
+     * @param bookId - book_id
+     * @return the order record you are looking for
+     * @throws SQLException for invalid data or connection error
+     * */
+    List<Order> getOrderByBookAndUserId(int userId, int bookId) throws SQLException;
+    /**
      * Get records about orders from range
      * @param from - range start
      * @param to - range end

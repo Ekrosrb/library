@@ -20,6 +20,7 @@ public class OrderRepo implements IOrderRepo {
     private static final String SQL_DELETE_ORDER = "DELETE FROM orders WHERE id = ?";
     private static final String SQL_UPDATE_ORDER = "UPDATE orders SET user_id = ?, book_id = ?, term = ?, fine = ?, status = ? WHERE id = ?";
     private static final String SQL_SELECT_ORDER = "SELECT * FROM orders WHERE id = ?";
+    private static final String SQL_SELECT_ORDER_BY_IDS = "SELECT * FROM orders WHERE user_id = ? && book_id = ?";
     private static final String SQL_SELECT_BY_STATUS = "SELECT * FROM orders WHERE status = ? LIMIT ?, ?";
     private static final String SQL_SELECT_ORDERS = "SELECT * FROM orders LIMIT ?, ?";
     private static final String SQL_COUNT = "SELECT COUNT(*) FROM orders";
@@ -98,6 +99,22 @@ public class OrderRepo implements IOrderRepo {
             }
         }
         return null;
+    }
+
+    @Override
+    public List<Order> getOrderByBookAndUserId(int userId, int bookId) throws SQLException {
+        OrderMapper mapper = new OrderMapper();
+        List<Order> orderList = new ArrayList<>();
+        try(Connection conn = DBCPDataSource.getConnection();
+            PreparedStatement statement = conn.prepareStatement(SQL_SELECT_ORDER_BY_IDS)){
+            statement.setInt(1, userId);
+            statement.setInt(2, bookId);
+            ResultSet res = statement.executeQuery();
+            while(res.next()){
+                orderList.add(mapper.getFromResultSet(res));
+            }
+        }
+        return orderList;
     }
 
     @Override

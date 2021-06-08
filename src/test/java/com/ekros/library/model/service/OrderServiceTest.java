@@ -11,6 +11,7 @@ import org.mockito.internal.util.reflection.Whitebox;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
 
 import static org.mockito.Matchers.any;
@@ -35,6 +36,9 @@ public class OrderServiceTest {
     @Test
     public void addOrder() throws SQLException {
         Order order = newOrderInstance(1, 1, Status.PENDING);
+        when(orderRepo.getOrderByBookAndUserId(anyInt(), anyInt())).thenReturn(Collections.singletonList(newOrderInstance(1, 1, Status.PENDING)));
+        Assert.assertThrows(SQLException.class, () -> orderService.addOrder(order));
+        when(orderRepo.getOrderByBookAndUserId(anyInt(), anyInt())).thenReturn(new ArrayList<>());
         when(orderRepo.insert(order)).thenReturn(order);
         Assert.assertEquals(order, orderService.addOrder(order));
     }

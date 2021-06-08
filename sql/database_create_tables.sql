@@ -35,6 +35,5 @@ CREATE TABLE orders(
     fine LONG NOT NULL,
     status INT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (book_id) REFERENCES books(id) ON DELETE CASCADE,
-    UNIQUE (user_id, book_id)
+    FOREIGN KEY (book_id) REFERENCES books(id) ON DELETE CASCADE
 );

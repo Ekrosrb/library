@@ -16,6 +16,12 @@ public class OrderService {
     }
 
     public Order addOrder(Order sub) throws SQLException {
+        List<Order> orders = orderRepo.getOrderByBookAndUserId(sub.getUserId(), sub.getBookId());
+        for(Order order: orders) {
+            if (order != null && order.getStatus() != Status.CLOSED && order.getStatus() != Status.REJECTED) {
+                throw new SQLException();
+            }
+        }
         return orderRepo.insert(sub);
     }
 

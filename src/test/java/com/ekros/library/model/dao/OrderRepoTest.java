@@ -86,6 +86,16 @@ public class OrderRepoTest {
     }
 
     @Test
+    public void getOrderByUserIdAndBookIdTest() throws SQLException {
+        Order order = newOrderInstance(1, 1, Status.PENDING);
+        repo.insert(order);
+        List<Order> orders = repo.getOrderByBookAndUserId(1, 1);
+        Assert.assertEquals(orders.size(), 1);
+        Assert.assertEquals(orders.get(0).getUserId(), order.getUserId());
+        Assert.assertEquals(orders.get(0).getBookId(), order.getBookId());
+    }
+
+    @Test
     public void updateOrderTest() throws SQLException {
         Order order = newOrderInstance(1, 1, Status.PENDING);
         repo.insert(order);
@@ -115,6 +125,15 @@ public class OrderRepoTest {
         order = repo.getOrder(order.getId());
         Assert.assertEquals(order.getFine(), 0);
         Assert.assertEquals(order.getStatus(), Status.PAID);
+    }
+
+    @Test
+    public void deleteOrderTest() throws SQLException{
+        Order order = newOrderInstance(1, 1, Status.PENDING);
+        repo.insert(order);
+        repo.delete(1);
+        Assert.assertNull(repo.getOrder(1));
+
     }
 
     @Test

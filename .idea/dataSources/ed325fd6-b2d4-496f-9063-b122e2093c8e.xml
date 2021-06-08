@@ -1072,9 +1072,7 @@ author</ColNames>
       <NotNull>1</NotNull>
     </column>
     <index id="307" parent="288" name="user_id">
-      <ColNames>user_id
-book_id</ColNames>
-      <Unique>1</Unique>
+      <ColNames>user_id</ColNames>
       <Type>btree</Type>
     </index>
     <index id="308" parent="288" name="book_id">
@@ -1086,80 +1084,75 @@ book_id</ColNames>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="310" parent="288" name="user_id">
-      <ColNames>user_id
-book_id</ColNames>
-      <UnderlyingIndexName>user_id</UnderlyingIndexName>
-    </key>
-    <foreign-key id="311" parent="288" name="orders_ibfk_1">
+    <foreign-key id="310" parent="288" name="orders_ibfk_1">
       <ColNames>user_id</ColNames>
       <RefTableName>users</RefTableName>
       <RefColNames>id</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="312" parent="288" name="orders_ibfk_2">
+    <foreign-key id="311" parent="288" name="orders_ibfk_2">
       <ColNames>book_id</ColNames>
       <RefTableName>books</RefTableName>
       <RefColNames>id</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="313" parent="289" name="id">
+    <column id="312" parent="289" name="id">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="314" parent="289" name="first_name">
+    <column id="313" parent="289" name="first_name">
       <Position>2</Position>
       <DataType>varchar(40)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="315" parent="289" name="last_name">
+    <column id="314" parent="289" name="last_name">
       <Position>3</Position>
       <DataType>varchar(40)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="316" parent="289" name="email">
+    <column id="315" parent="289" name="email">
       <Position>4</Position>
       <DataType>varchar(25)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="317" parent="289" name="password">
+    <column id="316" parent="289" name="password">
       <Position>5</Position>
       <DataType>varchar(150)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="318" parent="289" name="birthday">
+    <column id="317" parent="289" name="birthday">
       <Position>6</Position>
       <DataType>date|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="319" parent="289" name="phone">
+    <column id="318" parent="289" name="phone">
       <Position>7</Position>
       <DataType>varchar(15)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="320" parent="289" name="role">
+    <column id="319" parent="289" name="role">
       <Position>8</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="321" parent="289" name="block">
+    <column id="320" parent="289" name="block">
       <Position>9</Position>
       <DataType>tinyint(1)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="322" parent="289" name="email">
+    <index id="321" parent="289" name="email">
       <ColNames>email</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="323" parent="289" name="PRIMARY">
+    <key id="322" parent="289" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="324" parent="289" name="email">
+    <key id="323" parent="289" name="email">
       <ColNames>email</ColNames>
       <UnderlyingIndexName>email</UnderlyingIndexName>
     </key>
