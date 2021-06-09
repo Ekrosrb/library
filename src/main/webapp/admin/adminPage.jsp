@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ include file="../WEB-INF/jspf/taglib.jspf" %>
-
+<%@ taglib prefix="m" tagdir="/WEB-INF/tags" %>
 <!DOCTYPE html>
 <html lang="${sessionScope.locale}">
 <%@ include file="../WEB-INF/jspf/head.jspf"%>
@@ -54,22 +54,22 @@
     <%@ include file="../WEB-INF/jspf/content/adminPagination.jspf"%>
 
     <ul class="list-group">
-        <c:forEach items="${requestScope.userList}" var="users">
+        <c:forEach items="${requestScope.userList}" var="user">
 
             <li class="list-group-item">
-                <span>${users.firstName} ${users.lastName} | ${users.role}</span>
+                <span>${user.firstName} ${user.lastName} | ${user.role}</span>
                 <div class="d-flex justify-content-end">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#${users.id}" style="margin: 3px">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#${user.id}" style="margin: 3px">
                         <fmt:message key="admin.pane.edit"/>
                     </button>
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#${users.id}deleteModal" style="margin: 3px"><fmt:message key="admin.pane.delete"/></button>
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#${user.id}deleteModal" style="margin: 3px"><fmt:message key="admin.pane.delete"/></button>
                     <form method="post" action="${pageContext.request.contextPath}/library/updateUser">
-                        <input name="id" type="hidden" value="${users.id}">
-                        <input name="block" type="hidden" value="${not users.block}">
+                        <input name="id" type="hidden" value="${user.id}">
+                        <input name="block" type="hidden" value="${not user.block}">
                         <input name="href" type="hidden" value="/library/admin">
                         <button type="submit" class="btn btn-warning" style="margin: 3px">
                             <c:choose>
-                                <c:when test="${users.block}">
+                                <c:when test="${user.block}">
                                     <fmt:message key="admin.pane.unblock"/>
                                 </c:when>
                                 <c:otherwise>
@@ -80,38 +80,10 @@
                     </form>
                 </div>
             </li>
-
-            <div class="modal fade" id="${users.id}deleteModal" tabindex="-1" aria-labelledby="${users.id}deleteModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="${users.id}deleteModalLabel">
-                                <fmt:message key="message.alert.delete.title"/> ${users.email}
-                            </h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <fmt:message key="message.alert.delete"/>
-                        </div>
-                        <form method="post" action="${pageContext.request.contextPath}/library/deleteUser">
-                            <input type="hidden" name="id" value="${users.id}"/>
-                            <input type="hidden" name="href" value="/library/admin">
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                <fmt:message key="message.alert.delete.discard"/>
-                            </button>
-                            <button type="submit" class="btn btn-danger">
-                                <fmt:message key="message.alert.delete.confirm"/>
-                            </button>
-                        </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <%@ include file="../WEB-INF/jspf/content/editUserModal.jspf"%>
+            <%-- modal delete user --%>
+            <m:modalDeleteUser user="${user}"/>
+            <%-- modal edit user --%>
+            <m:modalEditUser user="${user}"/>
 
         </c:forEach>
     </ul>

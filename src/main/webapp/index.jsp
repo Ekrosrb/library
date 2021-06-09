@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ include file="/WEB-INF/jspf/taglib.jspf" %>
-
+<%@ taglib prefix="m" tagdir="/WEB-INF/tags" %>
 <!DOCTYPE html>
 <html lang="${sessionScope.locale}">
 <%@ include file="WEB-INF/jspf/head.jspf"%>
@@ -101,33 +101,7 @@
                 <c:if test="${not empty sessionScope.auth}">
                     <c:choose>
                         <c:when test="${book.count > 0}">
-                        <button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#${book.id}orderModal"><fmt:message key="book.card.button"/></button>
-                        <div class="modal fade" id="${book.id}orderModal" tabindex="-1" aria-labelledby="${book.id}orderModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="${book.id}orderModalLabel"><fmt:message key="form.order.title"/></h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <form method="post" action="${pageContext.request.contextPath}/library/orderBook" style="margin: 3px">
-                                        <div class="modal-body">
-                                            <input type="hidden" name="userId" value="${sessionScope.auth.userId}">
-                                            <input type="hidden" name="bookId" value="${book.id}">
-                                            <div class="mb-3">
-                                                <label for="term" class="form-label text-light"><fmt:message key="form.order.term"/></label>
-                                                <input class="form-control" type="date" min="2021-01-01" value="2021-01-01" id="term" name="term" aria-describedby="term">
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="modal.add.user.discard"/></button>
-                                            <button type="submit" class="btn btn-primary"><fmt:message key="modal.add.user.confirm"/></button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+                            <m:modalOrderBook book="${book}"/>
                         </c:when>
                     <c:otherwise>
                         <fmt:message key="book.card.available.message"/>
@@ -135,87 +109,11 @@
                     </c:choose>
                 </c:if>
                 <c:if test="${sessionScope.auth.role == 'ADMIN'}">
-                    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#${book.id}editBookModal" style="margin: 3px">
-                        <fmt:message key="book.card.admin.edit"/>
-                    </button>
-                    <!-- Modal -->
-                    <div class="modal fade" id="${book.id}editBookModal" tabindex="-1" aria-labelledby="${book.id}editBookModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="${book.id}editBookModalLabel"><fmt:message key="modal.book.title"/></h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <form method="post" action="${pageContext.request.contextPath}/library/adminUpdateBook">
-                                    <div class="modal-body">
-                                        <input type="hidden" name="id" value="${book.id}">
-                                        <input type="hidden" name="bookName" value="${requestScope.bookName}"/>
-                                        <div class="mb-3">
-                                            <label for="name" class="form-label text-dark"><fmt:message key="modal.book.name"/></label>
-                                            <input class="form-control" id="name" name="name" aria-describedby="name" value="${book.name}">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="author" class="form-label text-dark"><fmt:message key="modal.book.author"/></label>
-                                            <input class="form-control" id="author" name="author" aria-describedby="author" value="${book.author}">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="edition" class="form-label text-dark"><fmt:message key="modal.book.edition"/></label>
-                                            <input class="form-control" id="edition" name="edition" aria-describedby="edition" value="${book.edition}">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="count" class="form-label text-dark"><fmt:message key="modal.book.count"/></label>
-                                            <input class="form-control" type="number" id="count" name="count" aria-describedby="edition" value="${book.count}">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="description"><fmt:message key="modal.book.description.en"/></label>
-                                            <textarea class="form-control" id="description" name="description" rows="5" >${book.description}</textarea>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="descriptionRu"><fmt:message key="modal.book.description.ru"/></label>
-                                            <textarea class="form-control" id="descriptionRu" name="descriptionRu" rows="5" >${book.descriptionRu}</textarea>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="modal.edit.user.discard"/></button>
-                                        <button type="submit" class="btn btn-primary"><fmt:message key="modal.add.user.confirm"/></button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#${book.id}deleteModal" style="margin: 3px"><fmt:message key="admin.pane.delete"/></button>
-                    <div class="modal fade" id="${book.id}deleteModal" tabindex="-1" aria-labelledby="${book.id}deleteModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="${book.id}deleteModalLabel">
-                                        <fmt:message key="message.alert.delete.title"/> ${book.name}
-                                    </h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <fmt:message key="message.alert.delete"/>
-                                </div>
-                                <form method="post" action="${pageContext.request.contextPath}/library/deleteBook">
-                                    <input type="hidden" name="id" value="${book.id}"/>
-                                    <input type="hidden" name="href" value="/">
-                                    <input type="hidden" name="bookName" value="${requestScope.bookName}"/>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                            <fmt:message key="message.alert.delete.discard"/>
-                                        </button>
-                                        <button type="submit" class="btn btn-danger">
-                                            <fmt:message key="message.alert.delete.confirm"/>
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+
+                    <!-- Modal edit book -->
+                    <m:modalEditBook book="${book}"/>
+                    <!-- Modal delete book -->
+                    <m:modalDeleteBook book="${book}"/>
                 </c:if>
             </nav>
         </div>

@@ -1,4 +1,4 @@
-package com.ekros.library.controller.commands.user;
+package com.ekros.library.controller.commands.admin;
 
 import com.ekros.library.controller.commands.ICommand;
 import com.ekros.library.controller.commands.Path;
